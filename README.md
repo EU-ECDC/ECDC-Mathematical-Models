@@ -6,8 +6,8 @@ acute respiratory infection (ARI), and indicators related to COVID-19.
 
 ### Models submitted to [RespiCast](https://respicast.ecdc.europa.eu/)
 
-- ARI2MA: This ARIMA model for ARIs utilizes a square-root transformation on the data and incorporates seasonality terms.
-- FluForARIMA: This is an ARIMA model with seasonality terms that forecasts ILIs
+- _ARI2MA_: This ARIMA model for ARIs utilizes a square-root transformation on the data and incorporates seasonality terms.
+- _FluForARIMA_: This is an ARIMA model with seasonality terms that forecasts ILIs
 
 ### Models submitted to the [Covid-19 Forecast Hub](https://covid19forecasthub.eu/)
 

@@ -1,3 +1,9 @@
+########################################
+### Author: Lydia Champezou
+### Date: December 2023
+### Last update: March 2024
+########################################
+
 # ---- Keep the countries that report ----
 max_date <- max(data_cases$truth_date)
 

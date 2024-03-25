@@ -10,6 +10,8 @@ acute respiratory infection (ARI), and indicators related to COVID-19.
 
 ### Models submitted to the [Covid-19 Forecast Hub](https://covid19forecasthub.eu/)
 
+- _SARIMA_: This is an ARIMA model with seasonality terms that forecasts COVID-19 cases, deaths, and hospitalisations. 
+
 ### Models submitted to [Covid-19 Scenario Hub](https://covid19scenariohub.eu/)
 
 

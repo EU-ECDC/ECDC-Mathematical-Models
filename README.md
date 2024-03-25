@@ -1,7 +1,6 @@
 ## Welcome to the ECDC Mathematical Modelling Team's GitHub repository! 
-
 Here you will find a collection of mathematical models developed by our team for various purposes, 
-including forecasting for several respiratory disease indicators, such as influenza-like-illness (ILI), 
+including forecasting several respiratory disease indicators, such as influenza-like-illness (ILI), 
 acute respiratory infection (ARI), and indicators related to COVID-19.
 
 ### Models submitted to [RespiCast](https://respicast.ecdc.europa.eu/)

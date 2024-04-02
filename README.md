@@ -1,21 +1,26 @@
-## Welcome to the ECDC Mathematical Modelling Team's GitHub repository! 
-Here you will find a collection of mathematical models developed by our team for various purposes, 
-including forecasting several respiratory disease indicators, such as influenza-like-illness (ILI), 
-acute respiratory infection (ARI), and indicators related to COVID-19.
+## Welcome to the ECDC Mathematical Modelling Team's GitHub repository!
 
-### Models submitted to [RespiCast](https://respicast.ecdc.europa.eu/)
+Here you will find a collection of mathematical models developed by the ECDC Mathematical Modelling team for various purposes, for example forecasting respiratory disease indicators (influenza-like-illness (ILI), acute respiratory infection (ARI), and indicators related to COVID-19 ).\
+\
+This repository is structured using the following folders:
 
-- _ARI2MA_: This ARIMA model for ARIs utilizes a square-root transformation on the data and incorporates seasonality terms.
-- _FluForARIMA_: This is an ARIMA model with seasonality terms that forecasts ILIs.
+### "RespiCast_models"
 
-### Models submitted to the [Covid-19 Forecast Hub](https://covid19forecasthub.eu/)
+**Containing models submitted to [RespiCast](https://respicast.ecdc.europa.eu/)**
 
-- _SARIMA_: This is an ARIMA model with seasonality terms that forecasts COVID-19 cases, deaths, and hospitalisations. 
+-   *ARI2MA*: This ARIMA model for ARIs utilizes a square-root transformation on the data and incorporates seasonality terms.
+-   *FluForARIMA*: This is an ARIMA model with seasonality terms that forecasts ILIs.
 
-### Models submitted to [Covid-19 Scenario Hub](https://covid19scenariohub.eu/)
+### "Covid19-hub_models"
 
+**Models submitted to the [Covid-19 Forecast Hub](https://covid19forecasthub.eu/)**
 
-For further information about our models and research, please contact us at [Modelling@ecdc.europa.eu](mailto:Modelling@ecdc.europa.eu).
+-   *SARIMA*: This is an ARIMA model with seasonality terms that forecasts COVID-19 cases, deaths, and hospitalisations.
 
+### "Scenario-hub_models"
 
-  
+**Models submitted to [Covid-19 Scenario Hub](https://covid19scenariohub.eu/)**
+
+s
+
+For further information about our models and research, please contact us at [Modelling\@ecdc.europa.eu](mailto:Modelling@ecdc.europa.eu).

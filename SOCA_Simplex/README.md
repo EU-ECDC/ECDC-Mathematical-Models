@@ -2,6 +2,7 @@
 
 ## Description
 The SOCA (Similarity-based One-Step-ahead Component Analysis) Simplex method is used for projections of epidemiological targets such as COVID-19 cases, hospitalizations, or deaths, or ILI/ARI consultation rates.  However, the method but can be extended to basically any other disease indicator as the model is disease agnostic.
+
 The method uses historical data patterns with the highest similarity to current data to forecast future values.
 The functions within this 'sub-repository' are utilized for submitting forecasts for the European Respiratory Forecast Hub (RespiCast) - the main output of the package are the .csv files of the forecasts in the appropriate file structure for the Forecast Hub submission. 
 The relevant 'RespiCast' repositories are: [ARI Forecast Hub](https://github.com/european-modelling-hubs/ari-forecast-hub), [ILI Forecast Hub](https://github.com/european-modelling-hubs/flu-forecast-hub), [COVID-19 Forecast Hub](https://github.com/european-modelling-hubs/covid19-forecast-hub-europe)

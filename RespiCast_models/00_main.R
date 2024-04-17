@@ -3,7 +3,7 @@
 # useful stuff
 
 # print like this
-if (F) pr=paste("Warning: Check day diffs for:",country_i,"\n"); cat(red(pr))
+if (F) {pr=paste("Warning: Check day diffs for:",country_i,"\n"); cat(red(pr))}
 
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

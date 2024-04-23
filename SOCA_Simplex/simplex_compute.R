@@ -146,7 +146,7 @@ simplex_compute = function(df_train, # historical data to use for forecast
             my_vector[my_vector<=0] = NA # TODO: try finding a distribution which allows using 0 values
             
             # Skip if all values of distribution are NA or if only one value exists (aka, we cannot estimate the distribution from one value)
-            if ( length(unique(my_vector))<2 ) {
+            if ( length(unique(my_vector[!is.na(my_vector)]))<2 ) {
               
             } else {
               # Quantiles where we need value at: this is defined within the Hub procedure

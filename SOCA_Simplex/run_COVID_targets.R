@@ -118,7 +118,7 @@ run_COVID_targets = function(E_vec,
     date_submission = current_date
     df_submission %>% 
       filter(forecast_date == current_date) %>% 
-      write_csv(file=file.path(here(), paste0("COVID-19/",date_submission,"-ECDC-soca_simplex_", target,".csv")))
+      write_csv(file=file.path(here(), paste0("SOCA_Simplex/COVID-19/",date_submission,"-ECDC-soca_simplex_", target,".csv")))
     
   }
   
@@ -131,7 +131,7 @@ run_COVID_targets = function(E_vec,
   
   
   # Load the file of one target
-  x=read_csv(file=file.path(here(), paste0("COVID-19/", current_date ,"-ECDC-soca_simplex_",target ,".csv")),col_types = cols(.default = "c"))
+  x=read_csv(file=file.path(here(), paste0("SOCA_Simplex/COVID-19/", current_date ,"-ECDC-soca_simplex_",target ,".csv")),col_types = cols(.default = "c"))
   # Make sure 'value' is double
   x$value = as.double(x$value)
   
@@ -152,7 +152,7 @@ run_COVID_targets = function(E_vec,
   
   print(fig)
   # Save the figure
-  filename = file.path(here(), paste0("figures/", current_date ,"-ECDC-soca_simplex_",target ,".jpg"))
+  filename = file.path(here(), paste0("SOCA_Simplex/figures/", current_date ,"-ECDC-soca_simplex_",target ,".jpg"))
   ggsave(filename, width = 40, height = 20, units = "cm")
   
   return(0)

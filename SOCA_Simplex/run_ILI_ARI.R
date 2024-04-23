@@ -119,12 +119,12 @@ run_ILI_ARI = function(E_vec,
     if (target == "ILI incidence"){
       df_submission %>% 
         filter(origin_date == (current_date+2)) %>% 
-        write_csv(file=file.path(here(), paste0("ILI/",date_submission,"-ECDC-soca_simplex.csv")))
+        write_csv(file=file.path(here(), paste0("SOCA_Simplex/ILI/",date_submission,"-ECDC-soca_simplex.csv")))
       
     } else if (target == "ARI incidence"){
       df_submission %>% 
         filter(origin_date == (current_date+2)) %>% 
-        write_csv(file=file.path(here(), paste0("ARI/",date_submission,"-ECDC-soca_simplex.csv")))
+        write_csv(file=file.path(here(), paste0("SOCA_Simplex/ARI/",date_submission,"-ECDC-soca_simplex.csv")))
       
     } else {
       stop("Unclear target!")
@@ -140,9 +140,9 @@ run_ILI_ARI = function(E_vec,
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   # Load the file of the correct target
   if (target == "ILI incidence"){
-    x=read_csv(file=file.path(here(), paste0("ILI/", current_date+2 ,"-ECDC-soca_simplex.csv")),col_types = cols(.default = "c"))
+    x=read_csv(file=file.path(here(), paste0("SOCA_Simplex/ILI/", current_date+2 ,"-ECDC-soca_simplex.csv")),col_types = cols(.default = "c"))
   } else if (target == "ARI incidence"){
-    x=read_csv(file=file.path(here(), paste0("ARI/", current_date+2 ,"-ECDC-soca_simplex.csv")),col_types = cols(.default = "c"))
+    x=read_csv(file=file.path(here(), paste0("SOCA_Simplex/ARI/", current_date+2 ,"-ECDC-soca_simplex.csv")),col_types = cols(.default = "c"))
   } else {
     stop("Wrong target!")
   }
@@ -165,7 +165,7 @@ run_ILI_ARI = function(E_vec,
   
   print(fig)
   # Save the figure
-  filename = file.path(here(), paste0("figures/", current_date ,"-ECDC-soca_simplex_",target ,".jpg"))
+  filename = file.path(here(), paste0("SOCA_Simplex/figures/", current_date ,"-ECDC-soca_simplex_",target ,".jpg"))
   ggsave(filename, width = 40, height = 20, units = "cm")
   
   return(0)

@@ -4,7 +4,6 @@ Here you will find a collection of mathematical models developed by the ECDC Mat
 ## Running all forecasting models
 `main.R` in this folder will run all models for all currently active hubs. Output will be stored in `📁model_output` and is ready for submission via the appropriate github repositories.
 
-
 ## Overview of forecasting models
 ### SARIMA
  A simple ARIMA model with seasonality

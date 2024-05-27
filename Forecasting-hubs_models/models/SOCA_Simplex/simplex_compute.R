@@ -12,7 +12,6 @@ simplex_compute = function(df_train, # historical data to use for forecast
   df_comparison_all = NULL
   
   for (transform_type in transform_vec){ # A loop for every data type
-
     # Given the transform_type, create a new column with the data type to use
     if (transform_type == "weekly"){
       df_train$value_used = df_train$value

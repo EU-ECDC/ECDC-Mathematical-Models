@@ -165,7 +165,7 @@ run_ILI_ARI = function(E_vec,
   
   print(fig)
   # Save the figure
-  filename = file.path(here(), paste0("SOCA_Simplex/figures/", current_date ,"-ECDC-soca_simplex_",target ,".jpg"))
+  filename = file.path(here(), paste0("Forecasting-hubs_models/model_output/figures/", current_date ,"-ECDC-soca_simplex_",target ,".jpg"))
   ggsave(filename, width = 40, height = 20, units = "cm")
   
   return(0)

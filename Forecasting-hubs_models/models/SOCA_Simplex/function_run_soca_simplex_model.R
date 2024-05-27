@@ -1,15 +1,29 @@
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-### Simplex model for ILI/ARI  ########
+### Simplex model for ILI/ARI/COVID  ########
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # This function:
 # - loads and cleans the data for the relevant indicators, 
 # - defines defines the relevant parameters, and 
 # - calls the run_X.R function
 
-source("run_ILI_ARI.R")
-source("run_COVID_targets.R")
-source("estimate_simplex_WIS.R")
-source("simplex_compute.R")
+source("Forecasting-hubs_models/models/SOCA_Simplex/run_ILI_ARI.R")
+source("Forecasting-hubs_models/models/SOCA_Simplex/run_COVID_targets.R")
+source("Forecasting-hubs_models/models/SOCA_Simplex/estimate_simplex_WIS.R")
+source("Forecasting-hubs_models/models/SOCA_Simplex/simplex_compute.R")
+
+# Function that returns values from a that are not in b - used in for variable 'missing_countries' in run_ILI_ARI.R and run_COVID_targets.R
+relcomp <- function(a, b) {
+  
+  comp <- vector()
+  
+  for (i in a) {
+    if (i %in% a && !(i %in% b)) {
+      comp <- append(comp, i)
+    }
+  }
+  
+  return(comp)
+}
 
 run_soca_simplex_model = function(current_date, 
                                   save_files = T, # Variable to state if the output files are saved. Default is TRUE
@@ -300,7 +314,7 @@ run_soca_simplex_model = function(current_date,
   df = data.frame()
   for (target in c("case","death","hosp")){
     # Load the file of one target
-    x=read_csv(file=paste0("COVID-19/", current_date ,"-ECDC-soca_simplex_",target ,".csv"),col_types = cols(.default = "c"))
+    x=read_csv(file=paste0("Forecasting-hubs_models/model_output/COVID/", current_date ,"-ECDC-soca_simplex_",target ,".csv"),col_types = cols(.default = "c"))
     # Make sure 'value' is double
     x$value = as.double(x$value)
     
@@ -311,7 +325,7 @@ run_soca_simplex_model = function(current_date,
   # Save the dataframe with all targets in one file
   df %>% 
     filter(forecast_date == current_date) %>% 
-    write_csv(file=paste0("COVID-19/",date_submission,"-ECDC-soca_simplex.csv"))
+    write_csv(file=paste0("Forecasting-hubs_models/model_output/COVID/",date_submission,"-ECDC-soca_simplex.csv"))
   
   
   

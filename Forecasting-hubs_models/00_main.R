@@ -28,7 +28,7 @@ library(lubridate)
 today <- Sys.Date()
 # Find the previous Monday
 previous_monday <- today - lubridate::wday(today, week_start = 1) + 1 
-
+current_date = previous_monday
 
 
 # indicators to run

@@ -19,12 +19,14 @@ estimate_simplex_WIS = function(df_out=NULL,
   #full_data <- full_data[complete.cases(full_data$true_value), ]
   
   # compute scoring metrics
-  forecast_scores <- set_forecast_unit(
-    full_data,
-    c("origin_date", "target", "target_end_date", "horizon", "location", "model")
-  ) %>%
-    check_forecasts() %>%
-    score(metrics=c("ae_median", "interval_score"))
+  suppressWarnings({ # Supress warning msg about missing true data for weeks with no data
+    forecast_scores <- set_forecast_unit(
+      full_data,
+      c("origin_date", "target", "target_end_date", "horizon", "location", "model")
+    ) %>%
+      check_forecasts() %>%
+      score(metrics=c("ae_median", "interval_score"))
+  })
   
   # summarize scores
   summ_scores <- forecast_scores %>%

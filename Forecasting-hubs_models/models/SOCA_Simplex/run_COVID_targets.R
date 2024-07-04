@@ -144,6 +144,7 @@ run_COVID_targets = function(E_vec,
     filter(output_type != "median")
   
   # Plot the figure
+  df_train = df_train %>% mutate(observation = value)
   fig = plot_step_ahead_model_output(plot_mod_log, # Forecasts
                                      df_train %>% mutate(time_idx=date) %>% filter(date>ymd("2024-01-01")), # Reported data
                                      facet=c("location"), facet_scales = "free",

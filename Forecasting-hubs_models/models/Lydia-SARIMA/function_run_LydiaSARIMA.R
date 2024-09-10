@@ -46,7 +46,7 @@ run_LydiaSARIMA_model = function(current_date,
     
     # ---- 3. output ----
     source("Forecasting-hubs_models/models/Lydia-SARIMA/code/05_FinalOutputCSV.R")
-    final_output(current_date)
+    final_output(current_date,run_COVID_cases,run_COVID_deaths, run_COVID_hosps)
     message("completed, output stored")
   } else {
     message("not running LydiaSARIMA - no COVID targets requested")

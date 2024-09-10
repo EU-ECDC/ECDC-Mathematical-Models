@@ -313,6 +313,25 @@ run_soca_simplex_model = function(current_date,
   
   df = data.frame()
   for (target in c("case","death","hosp")){
+    # Check if we skip this target
+    if (target == "case"){
+      if (run_COVID_cases == F){
+        message(paste0("Skipping ", target))
+        next
+      }
+    }
+    if (target == "hosp"){
+      if (run_COVID_hosps == F){
+        message(paste0("Skipping ", target))
+        next
+      }
+    }
+    if (target == "death"){
+      if (run_COVID_deaths == F){
+        message(paste0("Skipping ", target))
+        next
+      }
+    }
     # Load the file of one target
     x=read_csv(file=paste0("Forecasting-hubs_models/model_output/COVID/", current_date ,"-ECDC-soca_simplex_",target ,".csv"),col_types = cols(.default = "c"))
     # Make sure 'value' is double

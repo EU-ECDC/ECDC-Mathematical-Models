@@ -35,7 +35,7 @@ current_date = previous_monday
 run_ILI = F # RespiCast season over
 run_ARI = F # RespiCast season over
 run_COVID_cases = T
-run_COVID_hosps = T
+run_COVID_hosps = F #hospitalizations currently broken
 run_COVID_deaths = T
 
 
@@ -43,15 +43,6 @@ run_COVID_deaths = T
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ### Source & run the models  ########
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-## SOCA Simplex
-source("Forecasting-hubs_models/models/SOCA_Simplex/function_run_soca_simplex_model.R")
-run_soca_simplex_model(current_date, 
-                       run_ILI = run_ILI,
-                       run_ARI = run_ARI,
-                       run_COVID_cases = run_COVID_cases,
-                       run_COVID_hosps = run_COVID_hosps,
-                       run_COVID_deaths = run_COVID_deaths)
-
 # # ARIMA models
 # source("Forecasting-hubs_models/models/ARI2MA/function_run_ARI2MA_model.R")
 # run_ARI2MA_model(current_date, 
@@ -76,6 +67,16 @@ run_LydiaSARIMA_model(current_date,
                   run_COVID_cases = run_COVID_cases,
                   run_COVID_hosps = run_COVID_hosps,
                   run_COVID_deaths = run_COVID_deaths)
+
+## SOCA Simplex
+source("Forecasting-hubs_models/models/SOCA_Simplex/function_run_soca_simplex_model.R")
+run_soca_simplex_model(current_date, 
+                       run_ILI = run_ILI,
+                       run_ARI = run_ARI,
+                       run_COVID_cases = run_COVID_cases,
+                       run_COVID_hosps = run_COVID_hosps,
+                       run_COVID_deaths = run_COVID_deaths)
+
 
 #norrsken models
 #source("function_run_norrsken_blue_model.R")

@@ -35,7 +35,7 @@ current_date = previous_monday
 run_ILI = F # RespiCast season over
 run_ARI = F # RespiCast season over
 run_COVID_cases = T
-run_COVID_hosps = F #hospitalizations currently broken
+run_COVID_hosps = T
 run_COVID_deaths = T
 
 

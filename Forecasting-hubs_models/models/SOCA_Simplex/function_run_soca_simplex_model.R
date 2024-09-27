@@ -226,8 +226,7 @@ run_soca_simplex_model = function(current_date,
   
   time_start = Sys.time()
   for (target in c("case", "death", "hosp")){
-    message(paste0("#### ---- Running for ", target))
-    
+
     # Check if we skip this target
     if (target == "case"){
       if (run_COVID_cases == F){
@@ -247,6 +246,8 @@ run_soca_simplex_model = function(current_date,
         next
       }
     }
+    
+    message(paste0("#### ---- Running for ", target))
     
     # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     ### COVID-19: Define parameters and perform simplex forecast ########

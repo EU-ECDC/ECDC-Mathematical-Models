@@ -45,6 +45,35 @@ create_output <- function(indicator, monday_date){
   
   Lydia_ARI2MA$value <- ifelse(indicator < 0, 0, indicator)
   
-  write.csv(Lydia_ARI2MA, paste0("./data-processed/", monday_date + 2,"-ECDC-ARI2MA.csv"), 
+  write.csv(Lydia_ARI2MA, paste0("Forecasting-hubs_models/model_output/ARI/", monday_date + 2,"-ECDC-ARI2MA.csv"), 
             row.names=FALSE)
+  
+  # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  ### Plot results and save the figure ########
+  # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  # Dataframe with results [format like the upload to GitHub]
+  x = Lydia_ARI2MA
+  
+  # Make sure 'value' is double
+  x$value = as.double(x$value)
+  
+  # Prepare the dataframe to be used in the 'plot_step_ahead_model_output' function below
+  plot_mod_log = x %>% 
+    mutate(model_id="log",
+           output_type_id = as.numeric(output_type_id)) %>% 
+    rename(target_date=target_end_date) %>% 
+    filter(output_type != "median")
+  
+  # Plot the figure
+  fig = plot_step_ahead_model_output(plot_mod_log, # Forecasts
+                                     df_train %>% mutate(time_idx=date) %>% filter(date>ymd("2024-01-01")), # Reported data
+                                     facet=c("location"), facet_scales = "free",
+                                     #intervals = c(0.95),
+                                     interactive=F)
+  
+  print(fig)
+  # Save the figure
+  filename = file.path(here(), paste0("figures/", current_date ,"-ARI2MA_ARI.jpg"))
+  ggsave(filename, width = 40, height = 20, units = "cm")
+  
 }

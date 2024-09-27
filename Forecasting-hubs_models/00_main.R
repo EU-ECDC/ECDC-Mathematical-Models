@@ -12,8 +12,7 @@ if (F) {pr=paste("Warning: Check day diffs for:",country_i,"\n"); cat(red(pr))}
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 library(devtools)
-SourceURL <- "https://raw.githubusercontent.com/european-modelling-hubs/modelling_setup/main/setup.R"
-source_url(SourceURL)
+source("Forecasting-hubs_models/setup.R")
 # load additional libraries beyond core ones from setup
 library(fitdistrplus)
 #source("../../../modelling_setup/setup.R")
@@ -43,30 +42,30 @@ run_COVID_deaths = T
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ### Source & run the models  ########
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# # ARIMA models
-# source("Forecasting-hubs_models/models/ARI2MA/function_run_ARI2MA_model.R")
-# run_ARI2MA_model(current_date, 
-#                  run_ILI = run_ILI,
-#                  run_ARI = run_ARI,
-#                  run_COVID_cases = run_COVID_cases,
-#                  run_COVID_hosps = run_COVID_hosps,
-#                  run_COVID_deaths = run_COVID_deaths)
+# ARIMA models
+source("Forecasting-hubs_models/models/ARI2MA/function_run_ARI2MA_model.R")
+run_ARI2MA_model(current_date,
+                 run_ILI = run_ILI,
+                 run_ARI = run_ARI,
+                 run_COVID_cases = run_COVID_cases,
+                 run_COVID_hosps = run_COVID_hosps,
+                 run_COVID_deaths = run_COVID_deaths)
 
-# source("models/FluForARIMA/function_run_FluForARIMA_model.R")
-# run_FluForARIMA_model(current_date, 
-#                  run_ILI = run_ILI,
-#                  run_ARI = run_ARI,
-#                  run_COVID_cases = run_COVID_cases,
-#                  run_COVID_hosps = run_COVID_hosps,
-#                  run_COVID_deaths = run_COVID_deaths)
+source("Forecasting-hubs_models/models/FluForARIMA/function_run_FluForARIMA_model.R")
+run_FluForARIMA_model(current_date,
+                      run_ILI = run_ILI,
+                      run_ARI = run_ARI,
+                      run_COVID_cases = run_COVID_cases,
+                      run_COVID_hosps = run_COVID_hosps,
+                      run_COVID_deaths = run_COVID_deaths)
 
 source("Forecasting-hubs_models/models/Lydia-SARIMA/function_run_LydiaSARIMA.R")
 run_LydiaSARIMA_model(current_date, 
-                  run_ILI = run_ILI,
-                  run_ARI = run_ARI,
-                  run_COVID_cases = run_COVID_cases,
-                  run_COVID_hosps = run_COVID_hosps,
-                  run_COVID_deaths = run_COVID_deaths)
+                      run_ILI = run_ILI,
+                      run_ARI = run_ARI,
+                      run_COVID_cases = run_COVID_cases,
+                      run_COVID_hosps = run_COVID_hosps,
+                      run_COVID_deaths = run_COVID_deaths)
 
 ## SOCA Simplex
 source("Forecasting-hubs_models/models/SOCA_Simplex/function_run_soca_simplex_model.R")

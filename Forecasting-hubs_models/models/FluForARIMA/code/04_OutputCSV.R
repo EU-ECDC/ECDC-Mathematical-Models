@@ -64,9 +64,12 @@ create_output <- function(indicator, monday_date){
     rename(target_date=target_end_date) %>% 
     filter(output_type != "median")
   
+  # Reported data - prepare for plotting
+  df_data = data_cases %>% rename(observation = value) # correct column names
+  
   # Plot the figure
   fig = plot_step_ahead_model_output(plot_mod_log, # Forecasts
-                                     df_train %>% mutate(time_idx=date) %>% filter(date>ymd("2024-01-01")), # Reported data
+                                     df_data %>% mutate(time_idx=date) %>% filter(date>ymd("2024-01-01")), # Reported data
                                      facet=c("location"), facet_scales = "free",
                                      #intervals = c(0.95),
                                      interactive=F)

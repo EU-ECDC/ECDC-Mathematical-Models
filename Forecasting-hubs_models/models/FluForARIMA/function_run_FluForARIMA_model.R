@@ -3,7 +3,7 @@
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Sept 2024, Author: Eva&Rok (wrapper) & Lydia (model)
 
-function_run_FluForARIMA_model = function(current_date, 
+run_FluForARIMA_model = function(current_date, 
                                      save_files = T, 
                                      run_ILI = T,
                                      run_ARI = T,

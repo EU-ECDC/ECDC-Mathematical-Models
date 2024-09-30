@@ -31,8 +31,8 @@ current_date = previous_monday
 
 
 # indicators to run
-run_ILI = F # RespiCast season over
-run_ARI = F # RespiCast season over
+run_ILI = T # RespiCast season over
+run_ARI = T # RespiCast season over
 run_COVID_cases = T
 run_COVID_hosps = T
 run_COVID_deaths = T
@@ -66,6 +66,8 @@ run_LydiaSARIMA_model(current_date,
                       run_COVID_cases = run_COVID_cases,
                       run_COVID_hosps = run_COVID_hosps,
                       run_COVID_deaths = run_COVID_deaths)
+
+
 
 ## SOCA Simplex
 source("Forecasting-hubs_models/models/SOCA_Simplex/function_run_soca_simplex_model.R")

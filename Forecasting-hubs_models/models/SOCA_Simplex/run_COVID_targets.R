@@ -128,7 +128,7 @@ run_COVID_targets = function(E_vec,
   ### COVID-19: Plot results and save the figure ########
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   # Additonally: Plot results and save the figure
-  browser()
+  
   # Load the file of one target
   x=read_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/COVID/", current_date ,"-ECDC-soca_simplex_",target ,".csv")),col_types = cols(.default = "c"))
   # Make sure 'value' is double

@@ -41,11 +41,11 @@ final_output <- function(monday_date,run_COVID_cases,run_COVID_deaths, run_COVID
       filter(output_type != "point")
     
     # Reported data - prepare for plotting
-    if (target == "case"){
+    if (target0 == "case"){
       df_data = data_cases
-    } else if (target == "hosp") {
+    } else if (target0 == "hosp") {
       df_data = data_hosps
-    } else if (target == "death") {
+    } else if (target0 == "death") {
       df_data = data_deaths
     } else {
       message("Plotting function: Wrong target name")
@@ -61,7 +61,7 @@ final_output <- function(monday_date,run_COVID_cases,run_COVID_deaths, run_COVID
     
     print(fig)
     # Save the figure
-    filename = file.path(here(), paste0("figures/", current_date ,"-LydiaSARIMA_",target0,".jpg"))
+    filename = file.path(here(), paste0("Forecasting-hubs_models/model_output/figures/", current_date ,"-LydiaSARIMA_",target0,".jpg"))
     ggsave(filename, width = 40, height = 20, units = "cm")
   }
   

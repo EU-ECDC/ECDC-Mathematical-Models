@@ -65,7 +65,9 @@ create_output <- function(indicator, monday_date){
     filter(output_type != "median")
   
   # Reported data - prepare for plotting
-  df_data = data_cases %>% rename(observation = value) # correct column names
+  df_data = data_cases %>% 
+    rename(observation = value,
+           date = truth_date) # correct column names
   
   # Plot the figure
   fig = plot_step_ahead_model_output(plot_mod_log, # Forecasts
@@ -76,7 +78,7 @@ create_output <- function(indicator, monday_date){
   
   print(fig)
   # Save the figure
-  filename = file.path(here(), paste0("figures/", current_date ,"-ARI2MA_ARI.jpg"))
+  filename = file.path(here(), paste0("Forecasting-hubs_models/model_output/figures/", current_date ,"-ARI2MA_ARI.jpg"))
   ggsave(filename, width = 40, height = 20, units = "cm")
   
 }

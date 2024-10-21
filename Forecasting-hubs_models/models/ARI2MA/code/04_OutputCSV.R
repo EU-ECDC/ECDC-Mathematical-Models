@@ -66,8 +66,7 @@ create_output <- function(indicator, monday_date){
   
   # Reported data - prepare for plotting
   df_data = data_cases %>% 
-    rename(observation = value,
-           date = truth_date) # correct column names
+    rename(date = truth_date) # correct column names
   
   # Plot the figure
   fig = plot_step_ahead_model_output(plot_mod_log, # Forecasts

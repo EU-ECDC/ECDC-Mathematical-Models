@@ -35,5 +35,4 @@ for (country in 1:N_countries){
   cases <- c(cases, as.vector(df_cases[[country]]))
 }
 
-#matplot(t(sim_arima), type = "l")
 

@@ -31,11 +31,11 @@ current_date = previous_monday
 
 
 # indicators to run
-run_ILI = T # RespiCast season over
-run_ARI = T # RespiCast season over
-run_COVID_cases = T
+run_ILI = T
+run_ARI = T
+run_COVID_cases = F #cases not part of RespiCast
 run_COVID_hosps = T
-run_COVID_deaths = T
+run_COVID_deaths = F #deaths not part of RespiCast
 
 
 

@@ -14,8 +14,8 @@ create_output <- function(indicator, monday_date){
     }
   } else if (length(indicator) == length(hosps)) {
     if(all.equal(indicator, hosps)) {
-      N_countries <- length(unique(data_hosps$location_name))
-      countries <- unique(data_hosps$location)
+      N_countries <- length(unique(data_hosps$location))
+      countries <- sort(unique(data_hosps$location))
       ind <- "hosp"
     }
   }

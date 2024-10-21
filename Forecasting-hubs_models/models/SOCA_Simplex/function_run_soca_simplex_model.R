@@ -53,7 +53,7 @@ run_soca_simplex_model = function(current_date,
                     "Poland", "Portugal", "Slovakia", "Slovenia", "Sweden" ) 
   
   # Load data
-  df_all_ILI = read.csv("https://raw.githubusercontent.com/european-modelling-hubs/flu-forecast-hub/main/target-data/latest-ILI_incidence.csv") %>%
+  df_all_ILI = read.csv("https://raw.githubusercontent.com/european-modelling-hubs/RespiCast-SyndromicIndicators/refs/heads/main/target-data/latest-ILI_incidence.csv") %>%
     rename(date = truth_date)
   
   # Filter and clean the data
@@ -68,7 +68,7 @@ run_soca_simplex_model = function(current_date,
     ungroup()
   
   # Load data
-  df_all_ARI = read.csv("https://raw.githubusercontent.com/european-modelling-hubs/ari-forecast-hub/main/target-data/latest-ARI_incidence.csv") %>%
+  df_all_ARI = read.csv("https://raw.githubusercontent.com/european-modelling-hubs/RespiCast-SyndromicIndicators/refs/heads/main/target-data/latest-ARI_incidence.csv") %>%
     rename(date = truth_date)
   
   # Filter and clean the data
@@ -173,8 +173,8 @@ run_soca_simplex_model = function(current_date,
   # Load data
   path_data_cases = "https://raw.githubusercontent.com/european-modelling-hubs/covid19-forecast-hub-europe/main/data-truth/ECDC/truth_ECDC-Incident%20Cases.csv"
   path_data_deaths = "https://raw.githubusercontent.com/european-modelling-hubs/covid19-forecast-hub-europe/main/data-truth/ECDC/truncated_ECDC-Incident%20Deaths.csv"
-  path_data_hosps = "https://raw.githubusercontent.com/european-modelling-hubs/covid19-forecast-hub-europe/main/data-truth/ECDC/truncated_ECDC-Incident%20Hospitalizations.csv"
-  
+  #path_data_hosps = "https://raw.githubusercontent.com/european-modelling-hubs/covid19-forecast-hub-europe/main/data-truth/ECDC/truncated_ECDC-Incident%20Hospitalizations.csv"
+  path_data_hosps = "https://raw.githubusercontent.com/european-modelling-hubs/RespiCast-Covid19/refs/heads/main/target-data/ERVISS/latest-hospital_admissions.csv"
   
   df_all_cases = read.csv(path_data_cases) %>%
     dplyr::select(location,date,value) 
@@ -183,7 +183,8 @@ run_soca_simplex_model = function(current_date,
     dplyr::select(location,date,value)
   
   df_all_hosps = read.csv(path_data_hosps) %>%
-    dplyr::select(location,date,value)
+    dplyr::select(location,truth_date ,value) %>%
+    rename(date=truth_date)
   
   # Filter and clean the data 
   df_train_cases = df_all_cases %>%
@@ -278,7 +279,7 @@ run_soca_simplex_model = function(current_date,
     }
     
     # Forecast dates: forecast for every week in the last 5 weeks - this is used to estimate optimal E and transform_vec
-    dates_to_forecast_from = (current_date-9) + c(-28,-21,-14,-7,0)
+    dates_to_forecast_from = (current_date-8) + c(-28,-21,-14,-7,0)
     
     # Country list to forecast - select all countries with available data
     country_list = df_all %>% pull(location) %>% unique()
@@ -344,7 +345,7 @@ run_soca_simplex_model = function(current_date,
   
   # Save the dataframe with all targets in one file
   df %>% 
-    filter(forecast_date == current_date) %>% 
+    filter(origin_date == current_date+2) %>% 
     write_csv(file=paste0("Forecasting-hubs_models/model_output/COVID/",date_submission,"-ECDC-soca_simplex.csv"))
   
   

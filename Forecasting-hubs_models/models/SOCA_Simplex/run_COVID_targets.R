@@ -97,18 +97,17 @@ run_COVID_targets = function(E_vec,
     mutate(output_type = "point",
            output_type_id = "")
   
-  df_submission = df_forecasts %>% 
+  df_submission =   df_forecasts %>% 
     mutate(output_type_id = as.character(output_type_id)) %>%
     bind_rows(df_forecasts_mean_values) %>% # Add median value to the forecast dataframe
-    mutate(forecast_date = origin_date+9, # change the definition of the origin date to agree with the date of submission
+    mutate(origin_date = origin_date+10, # change the definition of the origin date to agree with the date of submission
+           target = "hospital admissions",
            target_end_date = target_end_date,
-           target = paste0(horizon-1, " wk ahead inc ", target),
-           type = output_type,
-           quantile = as.double(output_type_id),
+           output_type = ifelse(output_type == "point","median","quantile"),
+           #quantile = as.double(output_type_id),
            value = as.integer(prediction)) %>% 
-    filter(horizon < 5) %>% # take only horizons up to 4 weeks ahead
-    dplyr::select(forecast_date, target, target_end_date, location, type, quantile, value)
-  
+    filter(horizon < 5) %>% # take only horizons up to 4 weeks ahead 
+    dplyr::select(origin_date,target,target_end_date,horizon,location,output_type,output_type_id,value) 
   
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   ### COVID-19: Save csv ########
@@ -116,8 +115,9 @@ run_COVID_targets = function(E_vec,
   
   if (save_files == T){
     date_submission = current_date
+    
     df_submission %>% 
-      filter(forecast_date == current_date) %>% 
+      filter(origin_date == current_date+2) %>% 
       write_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/COVID/",date_submission,"-ECDC-soca_simplex_", target,".csv")))
     
   }
@@ -138,8 +138,9 @@ run_COVID_targets = function(E_vec,
   plot_mod_log = x %>% 
     mutate(model_id="log") %>% 
     rename(target_date=target_end_date,
-           output_type_id = quantile,
-           output_type = type) %>% 
+           #output_type_id = quantile,
+           #output_type = type
+           ) %>% 
     filter(output_type != "median")
   
   # Plot the figure

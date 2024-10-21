@@ -11,7 +11,9 @@ estimate_simplex_WIS = function(df_out=NULL,
            true_value = value) %>%
     dplyr::select(location, target_end_date, true_value)
 
-  full_data <- merge(df_out %>% filter(E==E_optimal,transform_type==transform_type_optimal) %>% rename("quantile" = "output_type_id"), 
+  full_data <- merge(df_out %>% 
+                       filter(E==E_optimal,transform_type==transform_type_optimal) %>% 
+                       rename("quantile" = "output_type_id"), 
                      truth_data, by = c("target_end_date", "location"), all.x = TRUE)
   
   # remove rows related to median and where true data is null

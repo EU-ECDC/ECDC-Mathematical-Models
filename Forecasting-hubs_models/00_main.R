@@ -67,7 +67,15 @@ run_LydiaSARIMA_model(current_date,
                       run_COVID_hosps = run_COVID_hosps,
                       run_COVID_deaths = run_COVID_deaths)
 
+### TEMPORARY SOLUTION
+# merge ILI and ARI forecasts for new respicast hub
+ILI <- paste0('Forecasting-hubs_models/model_output/ILI/' , current_date+2 ,'-ECDC-FluForARIMA.csv')
+ARI <- paste0('Forecasting-hubs_models/model_output/ARI/' , current_date+2 ,'-ECDC-ARI2MA.csv')
 
+syndromic_indicators <- bind_rows(read_csv(ILI), read_csv(ARI)) 
+syndromic_indicators %<>%
+  mutate(output_type_id = ifelse(is.na(output_type_id), '', as.character(output_type_id)))
+write_csv(syndromic_indicators,paste0('Forecasting-hubs_models/model_output/Syndromic_indicators/', current_date+2,'-ECDC-SARIMA.csv'))
 
 ## SOCA Simplex
 source("Forecasting-hubs_models/models/SOCA_Simplex/function_run_soca_simplex_model.R")
@@ -78,6 +86,15 @@ run_soca_simplex_model(current_date,
                        run_COVID_hosps = run_COVID_hosps,
                        run_COVID_deaths = run_COVID_deaths)
 
+### TEMPORARY SOLUTION
+# merge ILI and ARI forecasts for new respicast hub
+ILI <- paste0('Forecasting-hubs_models/model_output/ILI/' , current_date+2 ,'-ECDC-soca_simplex.csv')
+ARI <- paste0('Forecasting-hubs_models/model_output/ARI/' , current_date+2 ,'-ECDC-soca_simplex.csv')
+
+syndromic_indicators <- bind_rows(read_csv(ILI), read_csv(ARI)) 
+syndromic_indicators %<>%
+  mutate(output_type_id = ifelse(is.na(output_type_id), '', as.character(output_type_id)))
+write_csv(syndromic_indicators,paste0('Forecasting-hubs_models/model_output/Syndromic_indicators/', current_date+2,'-ECDC-soca_simplex.csv'))
 
 #norrsken models
 #source("function_run_norrsken_blue_model.R")

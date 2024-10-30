@@ -65,12 +65,6 @@ run_soca_simplex_model(current_date,
                        run_COVID_deaths = run_COVID_deaths,
                        plot_results = plot_results)
 
-### TEMPORARY SOLUTION
-# merge ILI and ARI forecasts for new respicast hub
-ILI <- paste0('Forecasting-hubs_models/model_output/ILI/' , current_date+2 ,'-ECDC-soca_simplex.csv')
-ARI <- paste0('Forecasting-hubs_models/model_output/ARI/' , current_date+2 ,'-ECDC-soca_simplex.csv')
-
-
 
 #norrsken models
 #source("function_run_norrsken_blue_model.R")

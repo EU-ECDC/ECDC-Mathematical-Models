@@ -157,6 +157,17 @@ run_soca_simplex_model = function(current_date,
     message(paste0("#### ---- Finished for ", target))
   }
   
+  # Merge ILI and ARI forecasts
+  ILI <- paste0('Forecasting-hubs_models/model_output/Syndromic_indicators/ILI/' , current_date+2 ,'-ECDC-soca_simplex.csv')
+  ARI <- paste0('Forecasting-hubs_models/model_output/Syndromic_indicators/ARI/' , current_date+2 ,'-ECDC-soca_simplex.csv')
+  
+  syndromic_indicators <- bind_rows(read_csv(ILI), read_csv(ARI)) 
+  # TODO: check if the submission works without the two lines below - if yes, the two lines can be deleted
+  # syndromic_indicators %<>%
+  #   mutate(output_type_id = ifelse(is.na(output_type_id), '', as.character(output_type_id)))
+  write_csv(syndromic_indicators,paste0('Forecasting-hubs_models/model_output/Syndromic_indicators/', current_date+2,'-ECDC-soca_simplex.csv'))
+  
+  
   
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   ### COVID-19: Load and clean data ########
@@ -171,6 +182,7 @@ run_soca_simplex_model = function(current_date,
                     "Poland", "Portugal", "Slovakia", "Slovenia", "Sweden" ) 
   
   # Load data
+  # TODO: upload the cases and deaths links
   path_data_cases = "https://raw.githubusercontent.com/european-modelling-hubs/covid19-forecast-hub-europe/main/data-truth/ECDC/truth_ECDC-Incident%20Cases.csv"
   path_data_deaths = "https://raw.githubusercontent.com/european-modelling-hubs/covid19-forecast-hub-europe/main/data-truth/ECDC/truncated_ECDC-Incident%20Deaths.csv"
   #path_data_hosps = "https://raw.githubusercontent.com/european-modelling-hubs/covid19-forecast-hub-europe/main/data-truth/ECDC/truncated_ECDC-Incident%20Hospitalizations.csv"

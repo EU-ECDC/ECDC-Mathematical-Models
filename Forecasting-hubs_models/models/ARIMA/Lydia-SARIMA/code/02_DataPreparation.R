@@ -64,7 +64,7 @@ if (run_COVID_deaths){
 
 if (run_COVID_hosps){
   ts_bycountry_hosps <- data_hosps %>% 
-    filter(yearweek != '2020-W53') %>% #remove problematic week
+    filter(year_week != '2020-W53') %>% #remove problematic week
     select(truth_date, location, value) %>%
     spread(location, value) %>%
     select(-1)

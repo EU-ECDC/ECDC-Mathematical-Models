@@ -102,7 +102,7 @@ run_ILI_ARI = function(E_vec,
              output_type_id = "")
     
     df_submission = df_forecasts %>% 
-      mutate(output_type_id = as.character(output_type_id)) %>%
+      mutate(output_type_id = ifelse(is.na(output_type_id), '', as.character(output_type_id))) %>%
       bind_rows(df_forecasts_mean_values) %>% # Add median value to the forecast dataframe
       mutate(origin_date = origin_date+10, # change the definition of the origin date to agree with the date of submission
              target_end_date = target_end_date,
@@ -119,12 +119,12 @@ run_ILI_ARI = function(E_vec,
     if (target == "ILI incidence"){
       df_submission %>% 
         filter(origin_date == (current_date+2)) %>% 
-        write_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/ILI/",date_submission,"-ECDC-soca_simplex.csv")))
+        write_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/Syndromic_indicators/ILI/",date_submission,"-ECDC-soca_simplex.csv")))
       
     } else if (target == "ARI incidence"){
       df_submission %>% 
         filter(origin_date == (current_date+2)) %>% 
-        write_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/ARI/",date_submission,"-ECDC-soca_simplex.csv")))
+        write_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/Syndromic_indicators/ARI/",date_submission,"-ECDC-soca_simplex.csv")))
       
     } else {
       stop("Unclear target!")

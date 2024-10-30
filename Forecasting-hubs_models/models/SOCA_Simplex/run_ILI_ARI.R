@@ -140,9 +140,9 @@ run_ILI_ARI = function(E_vec,
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   # Load the file of the correct target
   if (target == "ILI incidence"){
-    x=read_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/ILI/", current_date+2 ,"-ECDC-soca_simplex.csv")),col_types = cols(.default = "c"))
+    x=read_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/Syndromic_indicators/ILI/", current_date+2 ,"-ECDC-soca_simplex.csv")),col_types = cols(.default = "c"))
   } else if (target == "ARI incidence"){
-    x=read_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/ARI/", current_date+2 ,"-ECDC-soca_simplex.csv")),col_types = cols(.default = "c"))
+    x=read_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/Syndromic_indicators/ARI/", current_date+2 ,"-ECDC-soca_simplex.csv")),col_types = cols(.default = "c"))
   } else {
     stop("Wrong target!")
   }

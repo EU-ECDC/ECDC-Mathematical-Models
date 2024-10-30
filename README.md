@@ -6,11 +6,10 @@ This repository is structured using the following folders:
 
 ## `Forecasting-hubs_models`
 
-**Containing models submitted to any of the forecasting hubs:** [RespiCast](https://respicast.ecdc.europa.eu/) and [Covid-19 Forecast Hub](https://covid19forecasthub.eu/)**
+**Containing models submitted to any of the forecasting hubs:** [RespiCast](https://respicast.ecdc.europa.eu/) (and to the now retired [Covid-19 Forecast Hub](https://covid19forecasthub.eu/))
 
 ## `Scenario-hub_models`
-
-**Models submitted to [Covid-19 Scenario Hub](https://covid19scenariohub.eu/)**
+currently empty, but is ready for models submitted to ECDC scenario hubs (e.g. RespiCompass)
 
 
 ## Contact

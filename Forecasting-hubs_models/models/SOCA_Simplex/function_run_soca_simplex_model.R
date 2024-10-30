@@ -31,8 +31,8 @@ run_soca_simplex_model = function(current_date,
                                   run_ARI = T,
                                   run_COVID_cases = T,
                                   run_COVID_hosps = T,
-                                  run_COVID_deaths = T
-                                  ){
+                                  run_COVID_deaths = T,
+                                  plot_results){
   
   # current_date = Monday of the submission week
   if ( weekdays(current_date) != "Monday"){
@@ -102,7 +102,7 @@ run_soca_simplex_model = function(current_date,
         next
       }
     }
-    message(paste0("#### ---- Running for ", target))
+    message(paste0("#### Running for ", target, " ####"))
     
     # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     ### ILIs & ARIs: Define parameters and perform simplex forecast ########
@@ -260,7 +260,7 @@ run_soca_simplex_model = function(current_date,
       }
     }
     
-    message(paste0("#### ---- Running for ", target))
+    message(paste0("#### Running for ", target, " ####"))
     
     # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     ### COVID-19: Define parameters and perform simplex forecast ########

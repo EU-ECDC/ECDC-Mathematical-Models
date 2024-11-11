@@ -42,7 +42,6 @@ simplex_compute = function(df_train, # historical data to use for forecast
         
         # In case there are no data for this country, go to the next country
         if (nrow(df_forecast_country) == 0){
-          message(paste0("No data frame for ", country))
           next
         }
         
@@ -55,13 +54,16 @@ simplex_compute = function(df_train, # historical data to use for forecast
             next
           }
           
+          if (ind<=(E-1)){
+            next
+          }
+          
           # Obtain current date (aka date of report) and the pattern of the last E values
           date_current <- df_forecast_country$date[ind]
           vec_current <- df_forecast_country$value_used[(ind-E+1):ind]
           
           # If any of the values in the pattern are NA, ignore and go to the next iteration
           if (any(is.na(vec_current))){
-            message(paste0("No data (vec_current) for ", country))
             next
           }
           
@@ -69,12 +71,19 @@ simplex_compute = function(df_train, # historical data to use for forecast
           df_train_country = df_train %>% filter(location == country, date!=date_forecast)
           df_final <- NULL
           # For loop that goes over all past dates, takes a pattern of length E and compares it to the current pattern
-          for (k in (E+1):(nrow(df_train_country)-E)){
-            # A pattern of length E from the past
+          #for (k in (E+1):(nrow(df_train_country)-E)){
+          k_min = E+1 # We need to haev at least data points so that data point E+1 can be the first one
+          k_max = nrow(df_train_country)-5 # we need 5 data points after the pattern to use as 5-week projections
+          if (k_min>k_max){
+            next
+          }
+          for (k in k_min:k_max){
+            # Skip the value of k if it is lower than value of E - in other words, we need at least E data points
             if (k<=(E-1)){
-              message(paste0("Number of data points for ", country, " is too short to use E=", E))
+              print(k)
               next
             }
+            # A pattern of length E from the past
             val = df_train_country$value_used[(k-E+1):k] 
             
             # Compute the error: the difference between 'current' pattern and 'past' pattern

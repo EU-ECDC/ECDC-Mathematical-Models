@@ -123,7 +123,6 @@ run_ILI_ARI = function(E_vec,
       
     } else if (target == "ARI incidence"){
       df_submission %>% 
-        filter(origin_date == (current_date+2)) %>% 
         write_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/Syndromic_indicators/ARI/",date_submission,"-ECDC-soca_simplex.csv")))
       
     } else {

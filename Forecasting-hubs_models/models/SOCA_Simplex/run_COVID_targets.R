@@ -100,7 +100,8 @@ run_COVID_targets = function(E_vec,
   df_submission = df_forecasts %>% 
     mutate(output_type_id = as.character(output_type_id)) %>%
     bind_rows(df_forecasts_mean_values) %>% # Add median value to the forecast dataframe
-    mutate(origin_date = origin_date+10, # change the definition of the origin date to agree with the date of submission
+    mutate(horizon = as.integer( difftime(target_end_date, (current_date-8), units = "weeks") ),
+           origin_date = current_date+2, # change the definition of the origin date to agree with the date of submission
            target = ifelse(target == "hosp","hospital admissions",
                            ifelse(target == "case", "cases","deaths")),
            target_end_date = target_end_date,

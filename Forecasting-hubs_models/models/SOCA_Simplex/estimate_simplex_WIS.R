@@ -18,10 +18,9 @@ estimate_simplex_WIS = function(df_out=NULL,
   
   # remove rows related to median and where true data is null
   full_data <- full_data[full_data$output_type != "median", ]
-  #full_data <- full_data[complete.cases(full_data$true_value), ]
   
   # compute scoring metrics
-  suppressWarnings({ # Supress warning msg about missing true data for weeks with no data
+  suppressMessages({ # Supress warning msg about missing true data for weeks with no data
     forecast_scores <- set_forecast_unit(
       full_data,
       c("origin_date", "target", "target_end_date", "horizon", "location", "model")

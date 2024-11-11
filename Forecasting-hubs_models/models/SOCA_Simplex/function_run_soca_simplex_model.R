@@ -32,7 +32,7 @@ run_soca_simplex_model = function(current_date,
                                   run_COVID_cases = T,
                                   run_COVID_hosps = T,
                                   run_COVID_deaths = T,
-                                  plot_results){
+                                  plot_results = F){
   
   # current_date = Monday of the submission week
   if ( weekdays(current_date) != "Monday"){

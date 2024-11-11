@@ -1,5 +1,4 @@
 # Function to (i) load the libraries and other required functions, and (ii) runs the model + saves the outputs
-# --warning-- Currently, this script does not yet work for ILI/ARI (paths need to be updated)
 
 # useful stuff
 

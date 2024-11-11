@@ -13,104 +13,105 @@ run_ILI_ARI = function(E_vec,
                        save_files,
                        target){
   
-    # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    ### ILIs & ARIs: Define parameters and perform simplex forecast ########
-    # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    
-    df_out = simplex_compute(df_train, dates_to_forecast_from, E_vec, country_list, transform_vec, target)
-    
-    
-    # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    ### ILIs & ARIs: Find optimal E and transform_type for each country ########
-    # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    
-    # For evert E and transform_type compute WIS
-    df_test_impact_variable = data.frame()
-    for (E in E_vec){
-      for (transform_type in transform_vec){
-        
-        summ_scores_simplex = estimate_simplex_WIS(df_out=df_out, 
-                                                   df_all=df_all, 
-                                                   E_optimal = E, 
-                                                   transform_type_optimal = transform_type, 
-                                                   which_method = "simplex")
-        summ_scores_simplex$E = E
-        summ_scores_simplex$transform_type = transform_type
-        
-        df_test_impact_variable = bind_rows(df_test_impact_variable, summ_scores_simplex)
-      }
+  # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  ### ILIs & ARIs: Define parameters and perform simplex forecast ########
+  # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  
+  df_out = simplex_compute(df_train, dates_to_forecast_from, E_vec, country_list, transform_vec, target)
+  
+  
+  # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  ### ILIs & ARIs: Find optimal E and transform_type for each country ########
+  # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  
+  # For evert E and transform_type compute WIS
+  df_test_impact_variable = data.frame()
+  for (E in E_vec){
+    for (transform_type in transform_vec){
+      
+      summ_scores_simplex = estimate_simplex_WIS(df_out=df_out, 
+                                                 df_all=df_all, 
+                                                 E_optimal = E, 
+                                                 transform_type_optimal = transform_type, 
+                                                 which_method = "simplex")
+      summ_scores_simplex$E = E
+      summ_scores_simplex$transform_type = transform_type
+      
+      df_test_impact_variable = bind_rows(df_test_impact_variable, summ_scores_simplex)
     }
-    
-    
-    
-    
-    # Get optimal E and transform_type for each country (aka, find minimal WIS)
-    optimal_pars = df_test_impact_variable %>% 
-      as.data.table() %>% 
-      summarise_scores(by=c("origin_date","target","location","model","E","transform_type"), relative_skill = F) %>%
-      group_by(target, location, model) %>%
-      summarise(min_WIS = min(interval_score),
-                best_E = E[interval_score == min_WIS],
-                best_transform_type = transform_type[interval_score == min_WIS]) %>%
-      ungroup()
-    
-    # Filter out the forecasts where ratio of 99 percentile and median value is >100
-    # This is done because sometimes (rarely) our forecasts are really wide due to issues of how we define uncertainty.
-    # Fix this by ignoring forecasts where 99 percentile value is >100x larger than the median one
-    df_out_filtered = df_out %>% 
-      group_by(location,target_end_date,horizon, target, model, E, transform_type, origin_date) %>%
-      mutate(rat = max(prediction) / prediction[output_type_id==0.5]) %>%
-      ungroup() %>%
-      arrange(rat) %>% 
+  }
+  
+  
+  
+  
+  # Get optimal E and transform_type for each country (aka, find minimal WIS)
+  optimal_pars = df_test_impact_variable %>% 
+    as.data.table() %>% 
+    summarise_scores(by=c("origin_date","target","location","model","E","transform_type"), relative_skill = F) %>%
+    group_by(target, location, model) %>%
+    summarise(min_WIS = min(interval_score),
+              best_E = E[interval_score == min_WIS],
+              best_transform_type = transform_type[interval_score == min_WIS]) %>%
+    ungroup()
+  
+  # Filter out the forecasts where ratio of 99 percentile and median value is >100
+  # This is done because sometimes (rarely) our forecasts are really wide due to issues of how we define uncertainty.
+  # Fix this by ignoring forecasts where 99 percentile value is >100x larger than the median one
+  df_out_filtered = df_out %>% 
+    group_by(location,target_end_date,horizon, target, model, E, transform_type, origin_date) %>%
+    mutate(rat = max(prediction) / prediction[output_type_id==0.5]) %>%
+    ungroup() %>%
+    arrange(rat) %>% 
+    merge(optimal_pars) %>%
+    filter(E == best_E,
+           transform_type == best_transform_type,
+           rat < 100) %>%
+    dplyr::select(-rat, min_WIS, best_E, best_transform_type)
+  
+  
+  # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  ### ILIs & ARIs: Prepare data for submission ########
+  # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  
+  # This part gathers 4-week forecasts from the last known data point
+  df_forecasts = data.frame()
+  missing_countries = unique(df_out_filtered$location)
+  for (date_forecast in rev(dates_to_forecast_from)){ # Loop for every week we do forecasts for, starting with most recent
+    # Filtered dataframe where we select only current date_forecast as well as best/optimal E and transform_type
+    df_tmp = df_out_filtered %>% 
       merge(optimal_pars) %>%
       filter(E == best_E,
              transform_type == best_transform_type,
-             rat < 100) %>%
-      dplyr::select(-rat, min_WIS, best_E, best_transform_type)
+             location %in% missing_countries) %>%
+      filter(origin_date == date_forecast)
     
+    df_forecasts = bind_rows(df_forecasts, df_tmp)
     
-    # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    ### ILIs & ARIs: Prepare data for submission ########
-    # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    
-    # This part gathers 4-week forecasts from the last known data point
-    df_forecasts = data.frame()
-    missing_countries = unique(df_out_filtered$location)
-    for (date_forecast in rev(dates_to_forecast_from)){ # Loop for every week we do forecasts for, starting with most recent
-      # Filtered dataframe where we select only current date_forecast as well as best/optimal E and transform_type
-      df_tmp = df_out_filtered %>% 
-        merge(optimal_pars) %>%
-        filter(E == best_E,
-               transform_type == best_transform_type,
-               location %in% missing_countries) %>%
-        filter(origin_date == date_forecast)
-      
-      df_forecasts = bind_rows(df_forecasts, df_tmp)
-      
-      # This part makes sure that in the next itration of the for loop we add forecasts of those countries that don't have their submissions added to df_forecast (see few lines above)
-      # In other words, we make sure to take only forecasts from most recent reported data value (and not forecasts from earlier weeks)
-      missing_countries = relcomp(unique(df_out_filtered$location),unique(df_forecasts$location))
-      if (isempty(missing_countries)){
-        break
-      }
+    # This part makes sure that in the next iteration of the 'for loop' we add forecasts of those countries that don't have their submissions added to df_forecast (see few lines above)
+    # In other words, we make sure to take only forecasts from most recent reported data value (and not forecasts from earlier weeks)
+    missing_countries = relcomp(unique(df_out_filtered$location),unique(df_forecasts$location))
+    if (isempty(missing_countries)){
+      break
     }
-    
-    # Add median value to the output dataframe (currently we only have quantiles)
-    df_forecasts_mean_values = df_forecasts %>% 
-      filter(output_type_id==0.5) %>%
-      mutate(output_type = "median",
-             output_type_id = "")
-    
-    df_submission = df_forecasts %>% 
-      mutate(output_type_id = ifelse(is.na(output_type_id), '', as.character(output_type_id))) %>%
-      bind_rows(df_forecasts_mean_values) %>% # Add median value to the forecast dataframe
-      mutate(origin_date = origin_date+10, # change the definition of the origin date to agree with the date of submission
-             target_end_date = target_end_date,
-             value = prediction) %>% 
-      filter(horizon < 5) %>% # take only horizons up to 4 weeks ahead
-      dplyr::select(origin_date, target, target_end_date, horizon, location, output_type, output_type_id, value)
+  }
   
+  # Add median value to the output dataframe (currently we only have quantiles)
+  df_forecasts_mean_values = df_forecasts %>% 
+    filter(output_type_id==0.5) %>%
+    mutate(output_type = "median",
+           output_type_id = "")
   
+  df_submission = df_forecasts %>% 
+    mutate(output_type_id = ifelse(is.na(output_type_id), '', as.character(output_type_id))) %>%
+    bind_rows(df_forecasts_mean_values) %>% # Add median value to the forecast dataframe
+    mutate(horizon = as.integer( difftime(target_end_date, (current_date-8), units = "weeks") ),
+           origin_date = current_date+2, # change the definition of the origin date to agree with the date of submission
+           target_end_date = target_end_date,
+           value = prediction) %>% 
+  dplyr::select(origin_date, target, target_end_date, horizon, location, output_type, output_type_id, value) %>%
+    filter(horizon %in% c(1,2,3,4))  %>% # take only horizons up to 4 weeks ahead
+    arrange(location,horizon)
+    
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   ### ILIs & ARIs: Save csv ########
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -118,7 +119,6 @@ run_ILI_ARI = function(E_vec,
     date_submission = current_date + 2
     if (target == "ILI incidence"){
       df_submission %>% 
-        filter(origin_date == (current_date+2)) %>% 
         write_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/Syndromic_indicators/ILI/",date_submission,"-ECDC-soca_simplex.csv")))
       
     } else if (target == "ARI incidence"){
@@ -148,7 +148,7 @@ run_ILI_ARI = function(E_vec,
   }
   # Make sure 'value' is double
   x$value = as.double(x$value)
-
+  
   # Prepare the dataframe to be used in the 'plot_step_ahead_model_output' function below
   plot_mod_log = x %>% 
     mutate(model_id="log",

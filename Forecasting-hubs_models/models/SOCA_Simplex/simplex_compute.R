@@ -71,6 +71,10 @@ simplex_compute = function(df_train, # historical data to use for forecast
           # For loop that goes over all past dates, takes a pattern of length E and compares it to the current pattern
           for (k in (E+1):(nrow(df_train_country)-E)){
             # A pattern of length E from the past
+            if (k<=(E-1)){
+              message(paste0("Number of data points for ", country, " is too short to use E=", E))
+              next
+            }
             val = df_train_country$value_used[(k-E+1):k] 
             
             # Compute the error: the difference between 'current' pattern and 'past' pattern

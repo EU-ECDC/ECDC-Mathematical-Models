@@ -119,7 +119,6 @@ run_COVID_targets = function(E_vec,
     date_submission = current_date
     
     df_submission %>% 
-      filter(origin_date == current_date+2) %>% 
       write_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/COVID/",date_submission,"-ECDC-soca_simplex_", target,".csv")))
     
   }

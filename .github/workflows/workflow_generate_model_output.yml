@@ -1,0 +1,79 @@
+name: GenerateModelOutput 
+
+# This example workflow is meant to depict steps needed to run R or Python code 
+# from a tools repository saving the output data to another data repository 
+# A good starting point for a better understandig of how GitHub actions work
+# is this: https://docs.github.com/en/actions/quickstart
+
+
+# Firts step is to define di events that can trigger this workflow
+on:
+
+  # You can trigger the workflow at a scheduled time 
+  schedule:
+    # runnit it every Tue at 6.00 pm
+    - cron: "00 18 * * 2"
+
+  
+  # Or you can manually trigger the workflow
+  workflow_dispatch:
+
+
+# then you need to define the flow of your jon step by step    
+jobs:
+
+  # here we need a single job, running on a standard Ubuntu virtual machine
+  main_job:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+
+    # Checkout the GitHub tools repo where R o Python 
+    # scripts used to run your model resides
+    # In this example tools repo is https://github.com/EU-ECDC/ECDC-Mathematical-Models
+    # --------------------------------------------------------------------------------      
+    - name: checkout tools repo
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        repository: 'EU-ECDC/ECDC-Mathematical-Models'
+        ref: 'main'  # the git branch to work on
+        path: './Forecasting-hubs_models/'  # Relative path under $GITHUB_WORKSPACE to place the repository
+
+
+    # Set up an R environment, with needed dependencies
+    # e.g. some GitHub hosted package or "jsonlite" package
+    # ----------------------------------------------------------------
+    - uses: r-lib/actions/setup-r@v2
+      with:
+        install-r: false
+        use-public-rspm: true
+        
+    - name: Installing dependencies
+      run: |
+        install.packages("remotes")
+        remotes::install_github("some-github-hosted-package")
+        install.packages("jsonlite")
+      shell: Rscript {0}
+
+    # Now you can run your R script from "R-code" folder under tools repo
+    # The --hub_path parameter is passed so that you can use it inside your script  
+    # to write the output into the data-repo
+    # --------------------------------------------------------------------
+    - name: do the R stuff
+      id: do_R_stuff
+      run: |
+        # call R script from tools
+        Rscript ./tools/R-code/r-suff.R  --hub_path "./repo"
+
+
+    # Finally, when you are done with your model processign, 
+    # commit changes to the data-repo 
+    - name: Commit data repo changes
+      uses: EndBug/add-and-commit@v7
+      with: 
+          cwd: './repo'
+          message: "Update data storage"
+          default_author: github_actions
+          push: true

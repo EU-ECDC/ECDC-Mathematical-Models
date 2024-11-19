@@ -33,13 +33,13 @@ jobs:
     # scripts used to run your model resides
     # In this example tools repo is https://github.com/EU-ECDC/ECDC-Mathematical-Models
     # --------------------------------------------------------------------------------      
-    - name: checkout tools repo
+    - name: checkout ECDC Mathematical Models repo
       uses: actions/checkout@v3
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         repository: 'EU-ECDC/ECDC-Mathematical-Models'
         ref: 'main'  # the git branch to work on
-        path: './Forecasting-hubs_models/'  # Relative path under $GITHUB_WORKSPACE to place the repository
+        path: './models'  # Relative path under $GITHUB_WORKSPACE to place the repository
 
 
     # Set up an R environment, with needed dependencies
@@ -63,7 +63,7 @@ jobs:
       id: do_R_stuff
       run: |
         # call R script from tools
-        Rscript /Forecasting-hubs_models/00_main.R  --hub_path "./repo"
+        Rscript ./models/Forecasting-hubs_models/00_main.R  --hub_path "./repo"
 
 
     # Finally, when you are done with your model processign, 

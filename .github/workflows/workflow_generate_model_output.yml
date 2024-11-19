@@ -63,7 +63,9 @@ jobs:
       id: do_R_stuff
       run: |
         # call R script from tools
-        Rscript ./models/Forecasting-hubs_models/00_main.R  --hub_path "./repo"
+        # Rscript ./models/Forecasting-hubs_models/00_main.R  --hub_path "./repo"
+        cd ./models/Forecasting-hubs_models
+        Rscript 00_main.R
 
 
     # Finally, when you are done with your model processign, 

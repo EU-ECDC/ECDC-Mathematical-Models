@@ -30,7 +30,8 @@ if (length(missing_packages)>0){
 
 
 library(devtools)
-source("Forecasting-hubs_models/setup.R")
+#source("Forecasting-hubs_models/setup.R")
+source("setup.R")
 # load additional libraries beyond core ones from setup
 library(fitdistrplus)
 #source("../../../modelling_setup/setup.R")

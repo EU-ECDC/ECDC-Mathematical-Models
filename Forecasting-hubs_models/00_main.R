@@ -10,6 +10,25 @@ if (F) {pr=paste("Warning: Check day diffs for:",country_i,"\n"); cat(red(pr))}
 ### Libraries and aux functions ########
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+# Install missing libraries
+required_libraries = c("arrow", "bayesplot", "caTools", "crayon", "dagitty", "data.table", 
+                       "DBI", "devtools", "dplyr", "dtplyr", "EcdcColors", "EnvStats", 
+                       "fitdistrplus", "forcats", "forecast", "fst", "gamlss", "gamlss.data", 
+                       "gamlss.dist", "ggplot2", "ggpubr", "ggrepel", "glmc", "here", 
+                       "Hmisc", "hubVis", "ISOweek", "KeyboardSimulator", "limSolve", 
+                       "lubridate", "magrittr", "MASS", "mgcv", "nlme", "odbc", "pacman", 
+                       "patchwork", "pracma", "purrr", "readr", "readxl", "scales", 
+                       "scoringutils", "sparsevar", "stringr", "summarytools", "survival", 
+                       "tibble", "tictoc", "tidybayes", "tidyr", "tidyverse", "usethis", 
+                       "viridis", "viridisLite", "wrapr", "zoo")
+installed_packages = rownames(installed.packages())
+missing_packages = setdiff(required_libraries, installed_packages)
+
+if (length(missing_packages)>0){
+  install.packages(missing_packages, dependencies = TRUE)
+}
+
+
 library(devtools)
 source("Forecasting-hubs_models/setup.R")
 # load additional libraries beyond core ones from setup

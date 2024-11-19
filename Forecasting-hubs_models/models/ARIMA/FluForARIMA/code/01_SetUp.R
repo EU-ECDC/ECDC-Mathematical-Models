@@ -1,11 +1,3 @@
-# ---- Load libraries ----
-library(readr)
-library(dplyr)
-library(tidyverse)
-library(forecast)
-library(countrycode)
-library(zoo) # to fill the missing values
-
 # ---- Load Data ----
 data_cases <- read.csv("https://raw.githubusercontent.com/european-modelling-hubs/RespiCast-SyndromicIndicators/refs/heads/main/target-data/latest-ILI_incidence.csv")
 

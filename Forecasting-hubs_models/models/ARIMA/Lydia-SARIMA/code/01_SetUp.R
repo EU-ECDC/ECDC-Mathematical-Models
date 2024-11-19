@@ -1,11 +1,3 @@
-# ---- Load libraries ----
-library(readr)
-library(dplyr)
-library(tidyverse)
-library(forecast)
-library(countrycode)
-library(zoo) # to handle missing values
-
 # ---- Load Data ----
 #data <- read_csv("data/data.csv")
 #View(data)

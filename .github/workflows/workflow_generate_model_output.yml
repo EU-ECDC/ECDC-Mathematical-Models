@@ -29,7 +29,7 @@ jobs:
     
     steps:
 
-    # Checkout the GitHub tools repo where R o Python 
+    # Checkout the GitHub tools repo where R 
     # scripts used to run your model resides
     # In this example tools repo is https://github.com/EU-ECDC/ECDC-Mathematical-Models
     # --------------------------------------------------------------------------------      
@@ -65,7 +65,7 @@ jobs:
       id: do_R_stuff
       run: |
         # call R script from tools
-        Rscript ./tools/R-code/r-suff.R  --hub_path "./repo"
+        Rscript ./Forecasting-hubs_models/00_main.R  --hub_path "./repo"
 
 
     # Finally, when you are done with your model processign, 

@@ -52,9 +52,7 @@ jobs:
         
     - name: Installing dependencies
       run: |
-        install.packages("remotes")
-        remotes::install_github("some-github-hosted-package")
-        install.packages("jsonlite")
+        install.packages("tidyverse")
       shell: Rscript {0}
 
     # Now you can run your R script from "R-code" folder under tools repo

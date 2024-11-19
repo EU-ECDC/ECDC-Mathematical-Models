@@ -25,9 +25,11 @@ installed_packages = rownames(installed.packages())
 missing_packages = setdiff(required_libraries, installed_packages)
 
 if (length(missing_packages)>0){
+  message("################# --- Installing missing packages... --- ###################" )
   install.packages(missing_packages, dependencies = TRUE)
 }
 
+message("################# --- Loading packages... --- ###################" )
 
 library(devtools)
 #source("Forecasting-hubs_models/setup.R")
@@ -42,6 +44,7 @@ library(lubridate)
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ### Settings  ########
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+message("################# --- Setting parameters --- ###################" )
 # set the date as the previous Monday to today (if today is Monday, use today)
 today <- Sys.Date()
 # Find the previous Monday

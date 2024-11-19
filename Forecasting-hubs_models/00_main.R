@@ -19,7 +19,7 @@ required_libraries = c("arrow", "bayesplot", "caTools", "crayon", "dagitty", "da
                        "lubridate", "magrittr", "MASS", "mgcv", "nlme", "odbc", "pacman", 
                        "patchwork", "pracma", "purrr", "readr", "readxl", "scales", 
                        "scoringutils", "sparsevar", "stringr", "summarytools", "survival", 
-                       "tibble", "tictoc", "tidybayes", "tidyr", "tidyverse", "usethis", 
+                       "tibble", "tictoc", "tidybayes", "tidylog", "tidyr", "tidyverse", "usethis", 
                        "viridis", "viridisLite", "wrapr", "zoo")
 installed_packages = rownames(installed.packages())
 missing_packages = setdiff(required_libraries, installed_packages)

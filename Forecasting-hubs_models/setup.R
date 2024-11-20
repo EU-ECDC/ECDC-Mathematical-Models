@@ -59,7 +59,7 @@ discard <- purrr::discard
 col_factor <- readr::col_factor
 combine <- gridExtra::combine
 area <- patchwork::area
-view <- summarytools::view
+#view <- summarytools::view
 # keeping only select functions from tidy_log 
 filter_log <- tidylog::filter
 left_join_log <- tidylog::left_join
@@ -67,7 +67,7 @@ fill_log <- tidylog::fill
 detach(package:tidylog, unload = T)
 # simplify calling functions
 g = glimpse
-. %>% dfSummary %>% view() -> viewsummary
+#. %>% dfSummary %>% view() -> viewsummary
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ### Other Options ##########

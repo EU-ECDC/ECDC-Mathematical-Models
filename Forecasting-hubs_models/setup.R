@@ -33,7 +33,6 @@ library(bayesplot)
 library(patchwork) # nice multi-facet plotting
 library(viridis)
 library(wrapr) # in wavefeature #
-library(tidylog) # only temporarily
 library(summarytools)
 library(zoo)
 library(here)
@@ -61,13 +60,6 @@ combine <- gridExtra::combine
 area <- patchwork::area
 #view <- summarytools::view
 # keeping only select functions from tidy_log 
-filter_log <- tidylog::filter
-left_join_log <- tidylog::left_join
-fill_log <- tidylog::fill
-detach(package:tidylog, unload = T)
-# simplify calling functions
-g = glimpse
-#. %>% dfSummary %>% view() -> viewsummary
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ### Other Options ##########
@@ -116,63 +108,7 @@ geom_ribbon <- function(...) ggplot2::geom_ribbon(...,alpha=0.4)
 ggplot <- function(...) ggplot2::ggplot(...) + scale_color_brewer(palette="Dark2")
 mean_qi <- function(...) ggdist::mean_qi(...,.width=0.80)
 
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-### Super basic functions ##########
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-clc = function() cat("\014")
-mstand <- function(v){
-  mout <- v/sum(v)
-  return(mout)
-}
-# return the last element(s) of a vector
-mlast <- function(v , n=1 ){
-  mout = v[length(v)]
-  if (n>1) {
-    last_element = length(v)
-    used_n = n
-    if (n > length(v)) {
-      used_n = min(length(v),n)
-      cat(red("mlast uses a smaller n"))
-    }
-    first_element = last_element - used_n + 1
-    mout = v[first_element:last_element]
-  }
-  return(mout)
-}
-# return the first element of a vector
-mfirst <- function(v ){
-  mout = v[1]
-  return(mout)
-}
-# 
-odds <- function(p){
-  (p/(1-p)) -> mout
-  return(mout)
-}
-inv_odds <- function( odds ){
-  # body
-  mp <- odds / (1+odds)
-  return(mp)
-} # try it: inv_odds( (0.4/0.6) )
-odds_log <- function( p ) {
-  log(p/(1-p)) -> mout
-  return(mout)
-}
-logit <- odds_log
-#
-inv_logit = function (x) 
-{
-  p <- 1/(1 + exp(-x))
-  p <- ifelse(x == Inf, 1, p)
-  return(p)
-}
-#
-zero_plus_eps = function(vector_with_zeros,eps=1/(100*10^6) ){
-  (vector_with_zeros==0) %>% sum() -> n_zeros
-  #print(paste("zero_plus_eps() is adding a mass of:", n_zeros*eps))
-  vector_with_zeros[vector_with_zeros==0] = eps
-  return(vector_with_zeros)
-}
+
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ### Medium-complex functions ##########
@@ -194,74 +130,6 @@ countries_short <- c("AT", "BE", "BG", "HR", "CY", "CZ",
                      # non EU/EEA
                      "CH","GB-ENG","GB-NIR","GB-SCT")
 
-
-# EL 
-#EU_short("Greece") <- "EL"
-# EU_short("Greece","EL")
-EU_short <- function(name_long,greece="GR" # or "EL
-){
-  name_short = name_long
-  for (i in 1:length(name_long)) {
-    name_short[i] <- countries_short[which(countries%in%name_long[i])]
-    if (name_long[i]=="Greece"&greece=="GR") name_short[i]<-"GR"
-    if (name_long[i]=="Greece"&greece!="GR") name_short[i]<-"EL"
-  }
-  
-  return(name_short)
-}
-#name_short=c("DE","PL","DE","GR"); EU_long(name_short)
-EU_long <- function(name_short) {
-  name_long <- name_short
-  for (i in 1:length(name_long)) {
-    x <- name_short[i]
-    if (x == "EL") x <- "GR"
-    ind <- which(countries_short %in% x)
-    if (is_empty(ind)) {
-      name_long[i] <- x
-    } else {
-      name_long[i] <- countries[ind]
-    }
-  }
-  return(name_long)
-}
-
-ecdc_weektodate <- function( year_week ){
-  if ( any( nchar( year_week )!=7 ) ){
-    stop( "Input must be of the format yyyy-ww !")
-  }
-  
-  date_out <- ISOweek2date( paste0( substr( year_week, 1, 4 ), "-W", substr( year_week, 6, 7 ), "-1"  ) ) 
-  
-  return( date_out )
-}
-
-ecdc_datetoweek <- function( date_in ){
-  if ( any( class( date_in )!="Date" ) ){
-    stop( "Input must be a date !")
-  }
-  iso_week <- date2ISOweek( date_in )
-  
-  year_week <- paste0( substr( iso_week, 1, 4 ), "-", substr( iso_week, 7, 8 ) )
-  return( year_week )
-}
-
-#  less simple functions, more specific to project
-quantile_df <- function(x, probs = c(0.25, 0.5, 0.75)) {
-  tibble(
-    val = quantile(x, probs, na.rm = TRUE),
-    quant = probs
-  )
-}
-
-column_stats_ingroups = function( df , mycolumn,mygroup , ... ) {
-  mycolumn = enquo(mycolumn)
-  mygroup = enquo(mygroup)
-  
-  mysumm = df %>% ungroup() %>% 
-    reframe( quantile_df( !!mycolumn , ... ), 
-             .by = !!mygroup )
-  return(mysumm)
-}
 
 # very end: timing
 end_time <- Sys.time()

@@ -52,7 +52,7 @@ jobs:
         
     - name: Installing dependencies
       run: |
-        install.packages("tidyverse")
+        install.packages("summarytools")
       shell: Rscript {0}
 
     # Now you can run your R script from "R-code" folder under tools repo

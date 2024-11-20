@@ -34,7 +34,7 @@ final_output <- function(monday_date,run_COVID_cases,run_COVID_deaths, run_COVID
     select(origin_date, target,target_end_date,horizon,location,output_type,output_type_id,value)
   
   
-  write.csv(Lydia_SARIMA, paste0("Forecasting-hubs_models/model_output/COVID/", monday_date+2,"-Lydia-SARIMA.csv"), row.names=FALSE)
+  write.csv(Lydia_SARIMA, paste0("Forecasting-hubs_models/model_output/COVID/", monday_date+2,"-ECDC-SARIMA.csv"), row.names=FALSE)
   
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   ### Plot results and save the figure ########

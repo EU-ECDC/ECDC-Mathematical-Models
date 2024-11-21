@@ -1,10 +1,6 @@
 # Function to (i) load the libraries and other required functions, and (ii) runs the model + saves the outputs
 
-# useful stuff
-
-# print like this
-if (F) {pr=paste("Warning: Check day diffs for:",country_i,"\n"); cat(red(pr))}
-
+message("################# --- Running the R script to run the ECDC RespiCast models... --- ###################" )
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ### Libraries and aux functions ########
@@ -23,6 +19,8 @@ required_libraries = c("arrow", "bayesplot", "caTools", "crayon", "dagitty", "da
                        "viridis", "viridisLite", "wrapr", "zoo")
 installed_packages = rownames(installed.packages())
 missing_packages = setdiff(required_libraries, installed_packages)
+message("################# --- Missing packages are: --- ###################" )
+message(missing_packages)
 
 if (length(missing_packages)>0){
   message("################# --- Installing missing packages... --- ###################" )

@@ -12,14 +12,14 @@ if (F) {pr=paste("Warning: Check day diffs for:",country_i,"\n"); cat(red(pr))}
 
 # Install missing libraries
 required_libraries = c("arrow", "bayesplot", "caTools", "crayon", "dagitty", "data.table", 
-                       "DBI", "devtools", "dplyr", "dtplyr", "EcdcColors", "EnvStats", 
+                       "DBI", "devtools", "dplyr", "dtplyr", "EnvStats", 
                        "fitdistrplus", "forcats", "forecast", "fst", "gamlss", "gamlss.data", 
                        "gamlss.dist", "ggplot2", "ggpubr", "ggrepel", "glmc", "here", 
                        "Hmisc", "hubVis", "ISOweek", "KeyboardSimulator", "limSolve", 
                        "lubridate", "magrittr", "MASS", "mgcv", "nlme", "odbc", "pacman", 
                        "patchwork", "pracma", "purrr", "readr", "readxl", "scales", 
                        "scoringutils", "sparsevar", "stringr", "summarytools", "survival", 
-                       "tibble", "tictoc", "tidybayes", "tidylog", "tidyr", "tidyverse", "usethis", 
+                       "tibble", "tictoc", "tidybayes", "tidyr", "tidyverse", "usethis", 
                        "viridis", "viridisLite", "wrapr", "zoo")
 installed_packages = rownames(installed.packages())
 missing_packages = setdiff(required_libraries, installed_packages)

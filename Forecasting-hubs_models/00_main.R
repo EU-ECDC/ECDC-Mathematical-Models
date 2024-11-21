@@ -1,7 +1,6 @@
 # Function to (i) load the libraries and other required functions, and (ii) runs the model + saves the outputs
 
 message("################# --- Running the R script to run the ECDC RespiCast models... --- ###################" )
-renv::status()
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ### Libraries and aux functions ########

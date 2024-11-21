@@ -64,6 +64,8 @@ plot_results = F
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ### Source & run the models  ########
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+message("################# --- Running the models --- ###################" )
+message("################# --- ARIMA --- ###################" )
 # ARIMA models
 source("Forecasting-hubs_models/models/ARIMA/run_ARIMA_models.R")
 run_ARIMA_models(current_date, 
@@ -76,6 +78,7 @@ run_ARIMA_models(current_date,
                         plot_results = plot_results)
 
 ## SOCA Simplex
+message("################# --- SOCA Simplex --- ###################" )
 source("Forecasting-hubs_models/models/SOCA_Simplex/function_run_soca_simplex_model.R")
 run_soca_simplex_model(current_date, 
                        run_ILI = run_ILI,

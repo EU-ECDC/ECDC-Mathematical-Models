@@ -57,6 +57,7 @@ jobs:
     - name: Installing R dependencies
       run: |
         install.packages("hubVis", repos = c("https://hubverse-org.r-universe.dev", "https://cloud.r-project.org"))
+        install.packages("remotes")
         remotes::install_github('epiforecasts/scoringutils@v1.2.2')
         #install.packages("scoringutils")
         install.packages("summarytools")

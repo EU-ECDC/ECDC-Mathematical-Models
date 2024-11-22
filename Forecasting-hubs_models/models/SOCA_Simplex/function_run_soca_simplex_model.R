@@ -236,6 +236,7 @@ run_soca_simplex_model = function(current_date,
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   ### COVID-19: Run for all targets ########
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  finished_one_target_ok = FALSE
   
   time_start = Sys.time()
   for (target in c("case", "death", "hosp")){
@@ -296,7 +297,7 @@ run_soca_simplex_model = function(current_date,
     # Country list to forecast - select all countries with available data
     country_list = df_all %>% pull(location) %>% unique()
     
-
+    
     tryCatch( # Add tryCatch to make sure that you can still run for other targets in case one target has an error
       {
         # This function runs the soca simplex, optimises it for optimal value of E and transform_vec, and saves the forecasts + figures
@@ -308,6 +309,7 @@ run_soca_simplex_model = function(current_date,
                           country_list,
                           save_files,
                           target)
+        finished_one_target_ok = TRUE
       },
       error = function(cond) {
         message(paste0("Soca simplex was not able to run for ", target))
@@ -321,7 +323,9 @@ run_soca_simplex_model = function(current_date,
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   ### COVID-19: Merge all three target files together ########
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  # Additonally: Plot results and save the figure
+  if (finished_one_target_ok == FALSE){
+    return(0)
+  }
   
   date_submission = current_date
   

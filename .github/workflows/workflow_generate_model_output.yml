@@ -58,9 +58,14 @@ jobs:
       run: |
         install.packages("hubVis", repos = c("https://hubverse-org.r-universe.dev", "https://cloud.r-project.org"))
         install.packages("devtools")
+        message("######################## installed devtools")
+        Sys.setenv(GITHUB_PAT = Sys.getenv("GITHUB_TOKEN"))
+        message("######################## set github token")
         devtools::install_github('epiforecasts/scoringutils@v1.2.2')
         #install.packages("scoringutils")
         install.packages("summarytools")
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       shell: Rscript {0}
 
     # Now you can run your R script from "R-code" folder under tools repo

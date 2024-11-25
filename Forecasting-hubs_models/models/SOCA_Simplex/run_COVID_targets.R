@@ -114,10 +114,8 @@ run_COVID_targets = function(E_vec,
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   ### COVID-19: Save csv ########
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  
+  date_submission = current_date + 2
   if (save_files == T){
-    date_submission = current_date + 2
-    
     df_submission %>% 
       write_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/COVID/",date_submission,"-ECDC-soca_simplex_", target,".csv")))
     
@@ -131,7 +129,7 @@ run_COVID_targets = function(E_vec,
   # Additonally: Plot results and save the figure
   
   # Load the file of one target
-  x=read_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/COVID/", current_date ,"-ECDC-soca_simplex_",target ,".csv")),col_types = cols(.default = "c"))
+  x=read_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/COVID/", date_submission ,"-ECDC-soca_simplex_",target ,".csv")),col_types = cols(.default = "c"))
   # Make sure 'value' is double
   x$value = as.double(x$value)
   

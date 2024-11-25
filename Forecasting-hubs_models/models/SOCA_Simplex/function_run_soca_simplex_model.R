@@ -323,6 +323,7 @@ run_soca_simplex_model = function(current_date,
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   ### COVID-19: Merge all three target files together ########
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  message(paste0("Finished at least one COVID target: ", finished_one_target_ok))
   if (finished_one_target_ok == FALSE){
     return(0)
   }

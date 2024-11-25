@@ -13,64 +13,62 @@
     create_PR_job:
       runs-on: ubuntu-latest
       steps:
+        # Step 1: Checkout the source repository (ECDC-Mathematical-Models)
+      - name: Checkout source repository
+        uses: actions/checkout@v3
+        with:
+          repository: 'EU-ECDC/ECDC-Mathematical-Models'
+          ref: 'main'
+          path: './source-repo'
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-        # Checkout your forked repository - main branch -
-        # where this action is currently hosted
-        # ---------------------------------------------------
-        - name: checkout forked repository
-          uses: actions/checkout@v3
-          with:
-            ref: main
-            token: ${{ secrets.GITHUB_TOKEN }}
+        # Step 2: Checkout the destination repository (RespiCast-SyndromicIndicators)
+      - name: Checkout destination repository
+        uses: actions/checkout@v3
+        with:
+          repository: 'european-modelling-hubs/RespiCast-SyndromicIndicators'
+          ref: 'main'
+          path: './destination-repo'
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-        # Checkout the model data repository - main branch -
-        # This is the repository where previous wf saved the model output data
-        # In this example data repo is https://github.com/your_organization/data-repo
-        # -----------------------------------------------------------------------------
-        - name: checkout data repository
-          uses: actions/checkout@v3
-          with:
-            ref: 'main' # the git branch to work on
-            token: ${{ secrets.GITHUB_TOKEN }}
-            repository: 'EU-ECDC/ECDC-Mathematical-Models'
-            path: './data-repo/' # Relative path under $GITHUB_WORKSPACE to place the repository
+        # Step 3: Sync destination repo and create a new branch
+      - name: Create a new branch
+        run: |
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          cd ./destination-repo
+          git checkout -b add-results-ILI-ARI
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+        # Step 4: Copy the two model-output files to the destination repository
+      - name: Copy model-output files
+        run: |
+          cp ./source-repo/Forecasting-hubs_models/model_output/Syndromic_indicators/2024-11-27-ECDC-soca_simplex.csv \
+             ./destination-repo/model-output/ECDC-soca_simplex/
+          cp ./source-repo/Forecasting-hubs_models/model_output/Syndromic_indicators/2024-11-27-ECDC-SARIMA.csv \
+             ./destination-repo/model-output/ECDC-SARIMA/
+        shell: bash
 
-
-        # Set the default remote repository to use when querying the GitHub API for the locally cloned repository.
-        - run: gh repo set-default european-modelling-hubs/flu-forecast-hub
-          env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
-        # Sync forked repo main branch, pull and then switch to a new brench
-        - run: |
-            git config --global user.email "YourGitHubUserEmail"
-            git config --global user.name "YourGitHubUserName"
-            gh repo sync your_organization/flu-forecast-hub -b main
-            git pull
-            git checkout -b my-branch
-
-          env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-        # make a copy of the needed files from source repo to local fork
-        - name: Copy model-output file
-          run: cp ./data-repo/model-output_filepath local_fliepath
-
-        # commit change to a new brach! This step is needed in order
-        # to succesfully open the subsequent pull request
-        - run: |
-            git add local_fliepath
-            git commit -m "Git Commit comment"
-            git push -u origin my-branch
-
-
-        # Finally, open the pull request from local my-branch to the main branch
-        # secrets.MY_PAT_SECRET is a repository secret you have to create in your forked repository
-        # containing a valid PERSONAL ACCESS TOKEN for YourGitHubUserName.
-        # Without this secret the pr create fails with "Resource not accessible by integration" error
-       - name: Open the pull requests
-          run: gh pr create --head  YourGitHubUserName:my-branch  --base main --title 'PR Title' --body 'PR Body'
-          env:
-            GH_TOKEN: ${{ secrets.MY_PAT_SECRET  }}
+        # Step 5: Commit the files to the new branch
+      - name: Commit changes
+        run: |
+          cd ./destination-repo
+          git add ./model-output/ECDC-soca_simplex/2024-11-27-ECDC-soca_simplex.csv \
+                  ./model-output/ECDC-SARIMA/2024-11-27-ECDC-SARIMA.csv
+          git commit -m "Submitting forecasts of Syndromic_indicators - soca_simplex and SARIMA models"
+          git push -u origin add-results-files
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+        # Step 6: Open a pull request
+      - name: Create a pull request
+        run: |
+          cd ./destination-repo
+          gh pr create --head github-actions[bot]:add-results-files \
+                       --base main \
+                       --title "Submitting ECDC forecasts" \
+                       --body "This PR adds the ECDC forecasts to RespiCast repo."
+        env:
+          GH_TOKEN: ${{ secrets.MY_PAT_SECRET }}
+          

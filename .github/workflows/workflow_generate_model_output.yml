@@ -1,4 +1,4 @@
-name: GenerateModelOutput 
+name: Generate_RespiCast_Forecasts
 
 # This example workflow is meant to depict steps needed to run R or Python code 
 # from a tools repository saving the output data to another data repository 

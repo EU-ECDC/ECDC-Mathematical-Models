@@ -1,4 +1,4 @@
-  name: Submit_RespiCast_Forecasts
+  name: Submit_RespiCast-SyndromicIndicators_Forecasts
   # Firts step is to define di events that can trigger this workflow
   on:
     # Run upon previous GenerateModelOutput completion
@@ -37,7 +37,7 @@
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
           cd ./destination-repo
-          git checkout -b add-results-ILI-ARI
+          git checkout -b add-results-RespiCast-SyndromicIndicators
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

@@ -57,7 +57,7 @@
           git add ./model-output/ECDC-soca_simplex/2024-11-27-ECDC-soca_simplex.csv \
                   ./model-output/ECDC-SARIMA/2024-11-27-ECDC-SARIMA.csv
           git commit -m "Submitting forecasts of Syndromic_indicators - soca_simplex and SARIMA models"
-          git push -u origin add-results-files
+          git push -u origin add-results-RespiCast-SyndromicIndicators
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         

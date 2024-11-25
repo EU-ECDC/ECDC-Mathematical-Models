@@ -328,7 +328,7 @@ run_soca_simplex_model = function(current_date,
     return(0)
   }
   
-  date_submission = current_date
+  date_submission = current_date + 2
   
   df = data.frame()
   for (target in c("case","death","hosp")){
@@ -352,7 +352,7 @@ run_soca_simplex_model = function(current_date,
       }
     }
     # Load the file of one target
-    x=read_csv(file=paste0("Forecasting-hubs_models/model_output/COVID/", current_date ,"-ECDC-soca_simplex_",target ,".csv"),col_types = cols(.default = "c"))
+    x=read_csv(file=paste0("Forecasting-hubs_models/model_output/COVID/", date_submission ,"-ECDC-soca_simplex_",target ,".csv"),col_types = cols(.default = "c"))
     # Make sure 'value' is double
     x$value = as.double(x$value)
     

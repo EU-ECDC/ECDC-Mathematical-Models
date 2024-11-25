@@ -115,8 +115,8 @@ run_ILI_ARI = function(E_vec,
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   ### ILIs & ARIs: Save csv ########
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  date_submission = current_date + 2
   if (save_files == T){
-    date_submission = current_date + 2
     if (target == "ILI incidence"){
       df_submission %>% 
         write_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/Syndromic_indicators/ILI/",date_submission,"-ECDC-soca_simplex.csv")))
@@ -139,9 +139,9 @@ run_ILI_ARI = function(E_vec,
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   # Load the file of the correct target
   if (target == "ILI incidence"){
-    x=read_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/Syndromic_indicators/ILI/", current_date+2 ,"-ECDC-soca_simplex.csv")),col_types = cols(.default = "c"))
+    x=read_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/Syndromic_indicators/ILI/", date_submission ,"-ECDC-soca_simplex.csv")),col_types = cols(.default = "c"))
   } else if (target == "ARI incidence"){
-    x=read_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/Syndromic_indicators/ARI/", current_date+2 ,"-ECDC-soca_simplex.csv")),col_types = cols(.default = "c"))
+    x=read_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/Syndromic_indicators/ARI/", date_submission ,"-ECDC-soca_simplex.csv")),col_types = cols(.default = "c"))
   } else {
     stop("Wrong target!")
   }
@@ -166,7 +166,7 @@ run_ILI_ARI = function(E_vec,
   
   print(fig)
   # Save the figure
-  filename = file.path(here(), paste0("Forecasting-hubs_models/model_output/figures/", current_date ,"-ECDC-soca_simplex_",target ,".jpg"))
+  filename = file.path(here(), paste0("Forecasting-hubs_models/model_output/figures/", date_submission ,"-ECDC-soca_simplex_",target ,".jpg"))
   ggsave(filename, width = 40, height = 20, units = "cm")
   
   return(0)

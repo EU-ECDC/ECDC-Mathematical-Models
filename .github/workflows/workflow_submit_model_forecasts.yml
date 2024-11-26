@@ -58,7 +58,7 @@
                   ./model-output/ECDC-SARIMA/2024-11-27-ECDC-SARIMA.csv
           git commit -m "Submitting forecasts of Syndromic_indicators - soca_simplex and SARIMA models"
           git push -u origin add-results-RespiCast-SyndromicIndicators
-          git push -u https://x-access-token:${{ secrets.MY_PAT_SECRET }}@github.com/european-modelling-hubs/RespiCast-SyndromicIndicators.git add-results-files
+          git push -u https://x-access-token:${{ secrets.MY_PAT_SECRET_RespiCast }}@github.com/european-modelling-hubs/RespiCast-SyndromicIndicators.git add-results-files
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
@@ -71,5 +71,5 @@
                        --title "Submitting ECDC forecasts" \
                        --body "This PR adds the ECDC forecasts to RespiCast repo."
         env:
-          GH_TOKEN: ${{ secrets.MY_PAT_SECRET }}
+          GH_TOKEN: ${{ secrets.MY_PAT_SECRET_RespiCast }}
           

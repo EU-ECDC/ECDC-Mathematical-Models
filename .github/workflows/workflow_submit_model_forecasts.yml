@@ -20,7 +20,7 @@
           repository: 'EU-ECDC/ECDC-Mathematical-Models'
           ref: 'main'
           path: './source-repo'
-          token: ${{ secrets.GITHUB_TOKEN }}
+          #token: ${{ secrets.GITHUB_TOKEN }}
 
         # Step 2: Checkout the destination repository (RespiCast-SyndromicIndicators)
       - name: Checkout destination repository
@@ -29,7 +29,7 @@
           repository: 'european-modelling-hubs/RespiCast-SyndromicIndicators'
           ref: 'main'
           path: './destination-repo'
-          token: ${{ secrets.GITHUB_TOKEN }}
+          #token: ${{ secrets.GITHUB_TOKEN }}
 
         # Step 3: Sync destination repo and create a new branch
       - name: Create a new branch
@@ -38,8 +38,8 @@
           git config --global user.name "github-actions[bot]"
           cd ./destination-repo
           git checkout -b add-results-RespiCast-SyndromicIndicators
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        #env:
+          #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
         # Step 4: Copy the two model-output files to the destination repository
       - name: Copy model-output files
@@ -58,9 +58,11 @@
                   ./model-output/ECDC-SARIMA/2024-11-27-ECDC-SARIMA.csv
           git commit -m "Submitting forecasts of Syndromic_indicators - soca_simplex and SARIMA models"
           git push -u origin add-results-RespiCast-SyndromicIndicators
-          git push -u https://x-access-token:${{ secrets.MY_PAT_SECRET_RespiCast }}@github.com/european-modelling-hubs/RespiCast-SyndromicIndicators.git add-results-files
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          #git push -u https://x-access-token:${{ secrets.MY_PAT_SECRET_RespiCast }}@github.com/european-modelling-hubs/RespiCast-SyndromicIndicators.git add-results-files
+          git push https://github.com/european-modelling-hubs/RespiCast-SyndromicIndicators.git HEAD:add-results-RespiCast-SyndromicIndicators
+
+        #env:
+          #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
         # Step 6: Open a pull request
       - name: Create a pull request
@@ -70,6 +72,6 @@
                        --base main \
                        --title "Submitting ECDC forecasts" \
                        --body "This PR adds the ECDC forecasts to RespiCast repo."
-        env:
-          GH_TOKEN: ${{ secrets.MY_PAT_SECRET_RespiCast }}
+        #env:
+          #GH_TOKEN: ${{ secrets.MY_PAT_SECRET_RespiCast }}
           

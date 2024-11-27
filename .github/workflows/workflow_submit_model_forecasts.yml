@@ -54,7 +54,7 @@
                   ./model-output/ECDC-SARIMA/2024-11-27-ECDC-SARIMA.csv
           git commit -m "Submitting forecasts of Syndromic_indicators - soca_simplex and SARIMA models"
           #git push -u origin add-results-RespiCast-SyndromicIndicators
-          git push -u https://x-access-token:${{ secrets.FORECASTHUB_TOKEN }}@github.com/european-modelling-hubs/RespiCast-SyndromicIndicators.git add-results-RespiCast-SyndromicIndicators
+          git push -u https://x-access-token:${{ secrets.Secret_PUSH_ACCESS_RespiCast }}@github.com/european-modelling-hubs/RespiCast-SyndromicIndicators.git add-results-RespiCast-SyndromicIndicators
         
         # Step 6: Open a pull request
       - name: Create a pull request

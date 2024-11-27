@@ -71,5 +71,5 @@
                        --title "Submitting ECDC forecasts" \
                        --body "This PR adds the ECDC forecasts to RespiCast repo."
         env:
-          GH_TOKEN: ${{ secrets.Secret_PUSH_ACCESS-RespiCast }}
+          GH_TOKEN: ${{ secrets.Secret_PUSH_ACCESS_RespiCast }}
           

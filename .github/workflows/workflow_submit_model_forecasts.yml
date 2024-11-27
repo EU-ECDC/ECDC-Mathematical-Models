@@ -33,7 +33,7 @@
       - name: Create a new branch
         run: |
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "RokGrah"
+          git config --global user.name "github-actions[bot]"
           cd ./destination-repo
           git checkout -b add-results-RespiCast-SyndromicIndicators
 

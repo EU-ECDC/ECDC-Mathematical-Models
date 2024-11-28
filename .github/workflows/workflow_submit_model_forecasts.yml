@@ -13,6 +13,7 @@
     create_PR_job:
       permissions:
         contents: write  # Allows pushing changes to the repository
+        pages: write
       runs-on: ubuntu-latest
         
       steps:

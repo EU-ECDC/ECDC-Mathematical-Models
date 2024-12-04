@@ -73,7 +73,7 @@ simplex_compute = function(df_train, # historical data to use for forecast
           # For loop that goes over all past dates, takes a pattern of length E and compares it to the current pattern
           #for (k in (E+1):(nrow(df_train_country)-E)){
           k_min = E+1 # We need to haev at least data points so that data point E+1 can be the first one
-          k_max = nrow(df_train_country)-5 # we need 5 data points after the pattern to use as 5-week projections
+          k_max = nrow(df_train_country)-6 # we need 5 data points after the pattern to use as 5-week projections
           if (k_min>k_max){
             next
           }
@@ -98,6 +98,7 @@ simplex_compute = function(df_train, # historical data to use for forecast
             df$forecast_3 <- df_train_country$value_used[k+3]
             df$forecast_4 <- df_train_country$value_used[k+4]
             df$forecast_5 <- df_train_country$value_used[k+5]
+            df$forecast_6 <- df_train_country$value_used[k+6]
             
             # Making a new dataframe with all the info from the past dates
             df_final <- bind_rows(df_final, df)
@@ -126,6 +127,7 @@ simplex_compute = function(df_train, # historical data to use for forecast
             simplex$forecast_3 = simplex$forecast_3 + df_forecast_country$value[ind]
             simplex$forecast_4 = simplex$forecast_4 + df_forecast_country$value[ind]
             simplex$forecast_5 = simplex$forecast_5 + df_forecast_country$value[ind]
+            simplex$forecast_6 = simplex$forecast_6 + df_forecast_country$value[ind]
             
           } else if (transform_type == "log-weekly") {
             simplex$forecast_1 = 10^simplex$forecast_1
@@ -133,6 +135,7 @@ simplex_compute = function(df_train, # historical data to use for forecast
             simplex$forecast_3 = 10^simplex$forecast_3
             simplex$forecast_4 = 10^simplex$forecast_4
             simplex$forecast_5 = 10^simplex$forecast_5
+            simplex$forecast_6 = 10^simplex$forecast_6
             
           } else if (transform_type == "delta-log-weekly") {
             simplex$forecast_1 = 10^(simplex$forecast_1 + df_forecast_country$value_log[ind])
@@ -140,13 +143,14 @@ simplex_compute = function(df_train, # historical data to use for forecast
             simplex$forecast_3 = 10^(simplex$forecast_3 + df_forecast_country$value_log[ind])
             simplex$forecast_4 = 10^(simplex$forecast_4 + df_forecast_country$value_log[ind])
             simplex$forecast_5 = 10^(simplex$forecast_5 + df_forecast_country$value_log[ind])
+            simplex$forecast_6 = 10^(simplex$forecast_6 + df_forecast_country$value_log[ind])
             
           } else {
             stop("Wrong data transformation type")
           }
           
           # A for loop for all possible horizons (currently 1:5, could be longer/shorter)
-          for (tau in 1:5){
+          for (tau in 1:6){
             # Take the tau-week forecast (aka take the correct column from simplex dataframe) + weights of the different forecasts (rows)
             df_dist=data.frame(value = (simplex%>%pull(paste0("forecast_",tau))), weight = weights)
             

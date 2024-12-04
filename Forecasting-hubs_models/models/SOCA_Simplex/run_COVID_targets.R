@@ -108,7 +108,8 @@ run_COVID_targets = function(E_vec,
            output_type = ifelse(output_type == "point","median","quantile"),
            #quantile = as.double(output_type_id),
            value = as.integer(prediction)) %>% 
-    filter(horizon < 5) %>% # take only horizons up to 4 weeks ahead 
+    filter(horizon < 5,
+           horizon > -2) %>% # take only horizons between -1 and 4 
     dplyr::select(origin_date,target,target_end_date,horizon,location,output_type,output_type_id,value) 
   
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

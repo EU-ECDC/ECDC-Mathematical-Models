@@ -45,9 +45,9 @@
         # Step 4: Copy the two model-output files to the destination repository
       - name: Copy model-output files
         run: |
-          cp ./source-repo/Forecasting-hubs_models/model_output/Syndromic_indicators/2024-11-27-ECDC-soca_simplex.csv \
+          cp ./source-repo/Forecasting-hubs_models/model_output/Syndromic_indicators/2024-12-04-ECDC-soca_simplex.csv \
              ./destination-repo/model-output/ECDC-soca_simplex/
-          cp ./source-repo/Forecasting-hubs_models/model_output/Syndromic_indicators/2024-11-27-ECDC-SARIMA.csv \
+          cp ./source-repo/Forecasting-hubs_models/model_output/Syndromic_indicators/2024-12-04-ECDC-SARIMA.csv \
              ./destination-repo/model-output/ECDC-SARIMA/
         shell: bash
 
@@ -55,8 +55,8 @@
       - name: Commit changes
         run: |
           cd ./destination-repo
-          git add ./model-output/ECDC-soca_simplex/2024-11-27-ECDC-soca_simplex.csv \
-                  ./model-output/ECDC-SARIMA/2024-11-27-ECDC-SARIMA.csv
+          git add ./model-output/ECDC-soca_simplex/2024-12-04-ECDC-soca_simplex.csv \
+                  ./model-output/ECDC-SARIMA/2024-12-04-ECDC-SARIMA.csv
           git commit -m "Submitting forecasts of Syndromic_indicators - soca_simplex and SARIMA models"
           git push https://x-access-token:${{ secrets.Secret_PUSH_ACCESS_RespiCast }}@github.com/european-modelling-hubs/RespiCast-SyndromicIndicators.git HEAD:add-results-RespiCast-SyndromicIndicators
           

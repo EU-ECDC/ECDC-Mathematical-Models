@@ -60,7 +60,7 @@
           #git merge origin/main
           git add ./model-output/ECDC-soca_simplex/2024-12-04-ECDC-soca_simplex.csv \
                   ./model-output/ECDC-SARIMA/2024-12-04-ECDC-SARIMA.csv
-          git commit -m "Submitting forecasts of Syndromic_indicators - soca_simplex and SARIMA models"
+          git commit -m "Submitting forecasts of Syndromic_indicators - soca_simplex and SARIMA models" || echo "Nothing to commit"
           # Pull the latest changes from the branch to avoid conflicts
           #git config pull.rebase false  # merge          
           #git pull https://x-access-token:${{ secrets.Secret_PUSH_ACCESS_RespiCast }}@github.com/european-modelling-hubs/RespiCast-SyndromicIndicators.git add-results-RespiCast-SyndromicIndicators

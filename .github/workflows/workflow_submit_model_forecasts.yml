@@ -55,6 +55,7 @@
       - name: Commit changes
         run: |
           cd ./destination-repo
+          git status  # Check what changes are detected
           #git fetch origin main  
           #git merge origin/main
           git add ./model-output/ECDC-soca_simplex/2024-12-04-ECDC-soca_simplex.csv \

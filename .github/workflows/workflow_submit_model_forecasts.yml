@@ -33,7 +33,21 @@
           ref: 'main'
           path: './destination-repo'
 
-        # Step 3: Sync destination repo and create a new branch
+        # Step 3: Calculate Wednesday's date of the current week
+      - name: Calculate Wednesday's date
+        id: calculate_wednesday
+        run: |
+          # Get the current day of the week (1=Monday, ..., 7=Sunday)
+          weekday=$(date +%u)
+          # Calculate how many days to add or subtract to get to Wednesday (3)
+          offset=$((3 - weekday))
+          # Calculate the date of the Wednesday (if offset is negative, subtract days)
+          wednesday_date=$(date -d "$offset days" +%Y-%m-%d)
+          echo "Wednesday's date is $wednesday_date"
+          # Set the output
+          echo "::set-output name=wednesday_date::$wednesday_date"
+          
+        # Step 4: Sync destination repo and create a new branch
       - name: Create a new branch
         run: |
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -42,27 +56,28 @@
           git config --unset-all http.https://github.com/.extraheader
           git checkout -b add-results-RespiCast-SyndromicIndicators
 
-        # Step 4: Copy the two model-output files to the destination repository
+        # Step 5: Copy the two model-output files to the destination repository
       - name: Copy model-output files
         run: |
-          cp ./source-repo/Forecasting-hubs_models/model_output/Syndromic_indicators/2024-12-04-ECDC-soca_simplex.csv \
+          wednesday_date=${{ steps.calculate_wednesday.outputs.wednesday_date }}
+          cp ./source-repo/Forecasting-hubs_models/model_output/Syndromic_indicators/${wednesday_date}-ECDC-soca_simplex.csv \
              ./destination-repo/model-output/ECDC-soca_simplex/
-          cp ./source-repo/Forecasting-hubs_models/model_output/Syndromic_indicators/2024-12-04-ECDC-SARIMA.csv \
+          cp ./source-repo/Forecasting-hubs_models/model_output/Syndromic_indicators/${wednesday_date}-ECDC-SARIMA.csv \
              ./destination-repo/model-output/ECDC-SARIMA/
         shell: bash
 
-        # Step 5: Commit the files to the new branch
+        # Step 6: Commit the files to the new branch
       - name: Commit changes
         run: |
           cd ./destination-repo
           git status  # Check what changes are detected
-          git add ./model-output/ECDC-soca_simplex/2024-12-04-ECDC-soca_simplex.csv \
-                  ./model-output/ECDC-SARIMA/2024-12-04-ECDC-SARIMA.csv
+          wednesday_date=${{ steps.calculate_wednesday.outputs.wednesday_date }}
+          git add ./model-output/ECDC-soca_simplex/${wednesday_date}-ECDC-soca_simplex.csv \
+                  ./model-output/ECDC-SARIMA/${wednesday_date}-ECDC-SARIMA.csv
           git commit -m "Submitting forecasts of Syndromic_indicators - soca_simplex and SARIMA models"
-          # Pull the latest changes from the branch to avoid conflicts
           git push https://x-access-token:${{ secrets.Secret_PUSH_ACCESS_RespiCast }}@github.com/european-modelling-hubs/RespiCast-SyndromicIndicators.git main
           
-        # Step 6: Open a pull request
+        # Step 7: Open a pull request
       - name: Create a pull request
         run: |
           cd ./destination-repo
@@ -73,7 +88,7 @@
         env:
           GH_TOKEN: ${{ secrets.Secret_PUSH_ACCESS_RespiCast }}
 
-        # Step 7: Delete the new branch
+        # Step 8: Delete the new branch
       - name: Delete the new branch
         if: success()  # Ensures this step runs only if all previous steps were successful
         run: |

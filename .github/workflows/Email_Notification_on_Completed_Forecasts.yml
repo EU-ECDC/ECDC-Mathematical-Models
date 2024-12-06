@@ -1,41 +1,40 @@
-name: Email_Workflow_Forecasts_summary
+name: Send Automated Email - RespiCast Forecast Summary
 
 on:
   workflow_run:
-    workflows: ["Generate_RespiCast_Forecasts"]
+    workflows: ["Generate_RespiCast_Forecasts"]  # Trigger when this workflow finishes
     types:
       - completed
 
 jobs:
-  notify_job:
+  send_email_job:
     runs-on: ubuntu-latest
-    
+
     steps:
-      # Step 1: Checkout the repository to access files
-      - name: Checkout the repository
-        uses: actions/checkout@v3
+    # Step 1: Check out the repository to access the files
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      # Step 2: Send an email with attached files
-      - name: Send email notification
-        uses: dawidd6/action-send-mail@v3
-        with:
-          # Email server details (SMTP)
-          server_address: smtp.gmail.com
-          server_port: 587
-          username: ${{ secrets.EMAIL_USERNAME }}
-          password: ${{ secrets.EMAIL_PASSWORD }}
+    # Step 2: Prepare the email content and attach files
+    - name: Send email via Outlook
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: 'smtp.office365.com'  # Outlook SMTP server
+        server_port: 587                      # Port for TLS
+        username: ${{ secrets.OUTLOOK_EMAIL }}
+        password: ${{ secrets.OUTLOOK_APP_PASSWORD }}
+        subject: "RespiCast Forecast Workflow Completed"
+        body: |
+          Hello,
 
-          # Email content
-          subject: "Workflow Completed: Generate RespiCast Forecasts"
-          to: recipient@example.com
-          from: ${{ secrets.EMAIL_USERNAME }}
-          content_type: text/html
-          body: |
-            <p>Hello,</p>
-            <p>The workflow <b>Generate_RespiCast_Forecasts</b> has completed successfully.</p>
-            <p>Attached are the relevant files:</p>
+          The RespiCast forecast generation workflow has been completed successfully. 
+          Please find the relevant files attached.
 
-          # Attach specific files
-          attachments: |
-            ./models/Forecasting-hubs_models/model_output/Syndromic_indicators/2024-12-04-ECDC-soca_simplex.csv
-            ./models/Forecasting-hubs_models/model_output/Syndromic_indicators/2024-12-04-ECDC-SARIMA.csv
+          Regards,
+          GitHub Actions
+        to: "rok.grah@ecdc.europa.eu"  # Recipient's email address
+        from: ${{ secrets.OUTLOOK_EMAIL }}
+        secure: true
+        attachments: |
+          ./models/Forecasting-hubs_models/model_output/model_output/figures/2024-12-04-ECDC-soca_simplex_ILI.jpg
+          ./models/Forecasting-hubs_models/model_output/model_output/figures/2024-12-04-ECDC-soca_simplex_ARI.jpg

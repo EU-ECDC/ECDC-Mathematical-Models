@@ -138,10 +138,13 @@ run_ILI_ARI = function(E_vec,
   ### ILIs & ARIs: Plot results and save the figure ########
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   # Load the file of the correct target
+  target_short = NA
   if (target == "ILI incidence"){
     x=read_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/Syndromic_indicators/ILI/", date_submission ,"-ECDC-soca_simplex.csv")),col_types = cols(.default = "c"))
+    target_short = "ILI"
   } else if (target == "ARI incidence"){
     x=read_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/Syndromic_indicators/ARI/", date_submission ,"-ECDC-soca_simplex.csv")),col_types = cols(.default = "c"))
+    target_short = "ARI"
   } else {
     stop("Wrong target!")
   }
@@ -166,7 +169,7 @@ run_ILI_ARI = function(E_vec,
   
   print(fig)
   # Save the figure
-  filename = file.path(here(), paste0("Forecasting-hubs_models/model_output/figures/", date_submission ,"-ECDC-soca_simplex_",target ,".jpg"))
+  filename = file.path(here(), paste0("Forecasting-hubs_models/model_output/figures/", date_submission ,"-ECDC-soca_simplex_", target_short ,".jpg"))
   ggsave(filename, width = 40, height = 20, units = "cm")
   
   return(0)

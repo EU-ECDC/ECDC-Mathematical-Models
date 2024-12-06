@@ -1,4 +1,4 @@
-name: Notify_Workflow_Completion
+name: Email_Workflow_Forecasts_summary
 
 on:
   workflow_run:

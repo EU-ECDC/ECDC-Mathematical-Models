@@ -20,7 +20,7 @@ jobs:
 
     # Step 2: Prepare the email content and attach files
     - name: Send email via gmail
-      uses: dawidd6/action-send-mail@v4
+      uses: dawidd6/action-send-mail@v3
       with:
         server_address: smtp.gmail.com  # gmail SMTP server
         server_port: 587 # Port for TLS

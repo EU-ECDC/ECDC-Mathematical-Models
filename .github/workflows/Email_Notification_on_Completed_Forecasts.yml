@@ -27,15 +27,8 @@ jobs:
         #server_port: 465 # Port for SSL
         username: ${{ secrets.GMAIL_EMAIL }}
         password: ${{ secrets.GMAIL_APP_PASSWORD }}
-        subject: "RespiCast Forecast Workflow Completed"
-        body: |
-          Hello,
-
-          The RespiCast forecast generation workflow has been completed successfully. 
-          Please find the relevant files attached.
-
-          Regards,
-          GitHub Actions
+        subject: RespiCast Forecast Workflow Completed
+        body: Test test
         to: rok.grah@ecdc.europa.eu  # Replace with the recipient's email address
         #from: ${{ secrets.GMAIL_EMAIL }}
         from: ecdc.ga@gmail.com

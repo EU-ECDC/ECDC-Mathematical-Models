@@ -5,6 +5,9 @@ on:
     workflows: ["Generate_RespiCast_Forecasts"]  # Trigger when this workflow finishes
     types:
       - completed
+  
+  # Or you can manually trigger the workflow
+  workflow_dispatch:
 
 jobs:
   send_email_job:

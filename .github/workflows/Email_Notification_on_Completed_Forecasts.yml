@@ -19,7 +19,7 @@ jobs:
     - name: Send email via Outlook
       uses: dawidd6/action-send-mail@v3
       with:
-        server_address: 'smtp.office365.com'  # Outlook SMTP server
+        server_address: 'smtp.gmail.com'  # Outlook SMTP server
         server_port: 587                      # Port for TLS
         username: ${{ secrets.GMAIL_EMAIL }}
         password: ${{ secrets.GMAIL_APP_PASSWORD }}

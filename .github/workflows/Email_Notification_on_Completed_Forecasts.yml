@@ -1,4 +1,4 @@
-name: Send Automated Email
+name: Send_Automated_Email
 
 on:
   workflow_run:

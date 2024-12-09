@@ -35,7 +35,7 @@ jobs:
 
           Regards,
           GitHub Actions
-        to: "rok.grah@ecdc.europa.eu"  # Replace with the recipient's email address
+        to: rok.grah@ecdc.europa.eu  # Replace with the recipient's email address
         from: ${{ secrets.GMAIL_EMAIL }}
         secure: true
         attachments: |

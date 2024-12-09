@@ -37,7 +37,8 @@ jobs:
       uses: dawidd6/action-send-mail@v3
       with:
         server_address: smtp.gmail.com  # gmail SMTP server
-        server_port: 587 # Port for TLS
+        #server_port: 587 # Port for TLS
+        server_port: 443 # Port for TLS
         #username: ${{ secrets.GMAIL_EMAIL }}
         username: ecdc.ga@gmail.com
         password: ${{ secrets.GMAIL_APP_PASSWORD }}

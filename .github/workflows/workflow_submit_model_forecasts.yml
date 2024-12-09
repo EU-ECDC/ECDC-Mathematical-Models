@@ -74,6 +74,7 @@
           wednesday_date=${{ steps.calculate_wednesday.outputs.wednesday_date }}
           git add ./model-output/ECDC-soca_simplex/${wednesday_date}-ECDC-soca_simplex.csv \
                   ./model-output/ECDC-SARIMA/${wednesday_date}-ECDC-SARIMA.csv
+          git status  # Verify if the files were staged
           git commit -m "Submitting forecasts of Syndromic_indicators - soca_simplex and SARIMA models"
           git push https://x-access-token:${{ secrets.Secret_PUSH_ACCESS_RespiCast }}@github.com/european-modelling-hubs/RespiCast-SyndromicIndicators.git main
           

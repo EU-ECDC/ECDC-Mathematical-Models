@@ -23,6 +23,15 @@ jobs:
       run: |
         echo "Username: ${{ secrets.GMAIL_EMAIL }}"
         echo "Password (first 3 characters): $(echo '${{ secrets.GMAIL_APP_PASSWORD }}' | cut -c1-3)***"
+
+    - name: Check if secrets are available
+      run: |
+        if [[ -z "${{ secrets.GMAIL_EMAIL }}" ]]; then
+          echo "GMAIL_EMAIL secret is not set!"
+        else
+          echo "GMAIL_EMAIL secret is set!"
+        fi
+
     
     # Step 1b: See which files are available
     - name: List files for debugging

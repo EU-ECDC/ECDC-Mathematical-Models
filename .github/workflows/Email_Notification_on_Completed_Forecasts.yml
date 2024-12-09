@@ -32,11 +32,6 @@ jobs:
           echo "GMAIL_EMAIL secret is set!"
         fi
 
-    
-    # Step 1b: See which files are available
-    - name: List files for debugging
-      run: ls -R ./Forecasting-hubs_models/model_output/figures/      
-      
     # Step 2: Prepare the email content and attach files
     - name: Send email via gmail
       uses: dawidd6/action-send-mail@v3

@@ -1,4 +1,4 @@
-name: Send Automated Email - RespiCast Forecast Summary
+name: Send Automated Email
 
 on:
   workflow_run:
@@ -21,8 +21,8 @@ jobs:
       with:
         server_address: 'smtp.office365.com'  # Outlook SMTP server
         server_port: 587                      # Port for TLS
-        username: ${{ secrets.OUTLOOK_EMAIL }}
-        password: ${{ secrets.OUTLOOK_APP_PASSWORD }}
+        username: ${{ secrets.GMAIL_EMAIL }}
+        password: ${{ secrets.GMAIL_APP_PASSWORD }}
         subject: "RespiCast Forecast Workflow Completed"
         body: |
           Hello,
@@ -32,9 +32,10 @@ jobs:
 
           Regards,
           GitHub Actions
-        to: "rok.grah@ecdc.europa.eu"  # Recipient's email address
-        from: ${{ secrets.OUTLOOK_EMAIL }}
+        to: "rok.grah@ecdc.europa.eu"  # Replace with the recipient's email address
+        from: ${{ secrets.GMAIL_EMAIL }}
         secure: true
         attachments: |
           ./models/Forecasting-hubs_models/model_output/model_output/figures/2024-12-04-ECDC-soca_simplex_ILI.jpg
           ./models/Forecasting-hubs_models/model_output/model_output/figures/2024-12-04-ECDC-soca_simplex_ARI.jpg
+          ./models/Forecasting-hubs_models/model_output/model_output/figures/2024-12-04-ECDC-soca_simplex_hosp.jpg

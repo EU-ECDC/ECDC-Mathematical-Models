@@ -18,9 +18,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: List the root directory
-      run: ls -R .  # This will list all files in the repository to help debug the file location.
-
     # Step 1a: See which files are available
     - name: List files for debugging
       run: ls -R ./Forecasting-hubs_models/model_output/figures/      

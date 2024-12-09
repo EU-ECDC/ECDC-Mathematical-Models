@@ -32,4 +32,7 @@ jobs:
         #from: ${{ secrets.GMAIL_EMAIL }}
         from: ecdc.ga@gmail.com
         secure: false
-        
+        attachments: |
+          ./models/Forecasting-hubs_models/model_output/figures/2024-12-04-ECDC-soca_simplex_ILI.jpg
+          ./models/Forecasting-hubs_models/model_output/figures/2024-12-04-ECDC-soca_simplex_ARI.jpg
+          ./models/Forecasting-hubs_models/model_output/figures/2024-12-04-ECDC-soca_simplex_hosp.jpg

@@ -46,7 +46,15 @@
           echo "Wednesday's date is $wednesday_date"
           # Set the output
           echo "::set-output name=wednesday_date::$wednesday_date"
-          
+
+        # Step 3a: Debug file existence
+      - name: Debug file existence
+        run: |
+          echo "Source directory files:"
+          ls ./source-repo/Forecasting-hubs_models/model_output/Syndromic_indicators/
+          echo "Destination directory:"
+          ls ./destination-repo/model-output/
+
         # Step 4: Sync destination repo and create a new branch
       - name: Create a new branch
         run: |

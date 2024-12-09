@@ -20,7 +20,7 @@ jobs:
 
     # Step 1a: See which files are available
     - name: List files for debugging
-      run: ls -R ./models/Forecasting-hubs_models/model_output/figures/
+      run: ls -R ./models/Forecasting-hubs_models/model_output/figures/      
       
     # Step 2: Prepare the email content and attach files
     - name: Send email via gmail

@@ -18,7 +18,13 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Step 1a: See which files are available
+    # Step 1a: Print debug information for Gmail credentials
+    - name: Print Gmail credentials (for debugging)
+      run: |
+        echo "Username: ${{ secrets.GMAIL_EMAIL }}"
+        echo "Password (first 3 characters): $(echo '${{ secrets.GMAIL_APP_PASSWORD }}' | cut -c1-3)***"
+    
+    # Step 1b: See which files are available
     - name: List files for debugging
       run: ls -R ./Forecasting-hubs_models/model_output/figures/      
       

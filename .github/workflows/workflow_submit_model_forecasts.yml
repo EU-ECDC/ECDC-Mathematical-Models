@@ -88,12 +88,4 @@
                        --body "This PR adds the ECDC forecasts to RespiCast repo."
         env:
           GH_TOKEN: ${{ secrets.Secret_PUSH_ACCESS_RespiCast }}
-
-        # Step 8: Delete the new branch
-      - name: Delete the new branch
-        if: success()  # Ensures this step runs only if all previous steps were successful
-        run: |
-          cd ./destination-repo
-          git branch -d add-results-RespiCast-SyndromicIndicators  # Delete the local branch
-          git push https://x-access-token:${{ secrets.Secret_PUSH_ACCESS_RespiCast }}@github.com/european-modelling-hubs/RespiCast-SyndromicIndicators.git --delete add-results-RespiCast-SyndromicIndicators  # Delete the remote branch
-
+          

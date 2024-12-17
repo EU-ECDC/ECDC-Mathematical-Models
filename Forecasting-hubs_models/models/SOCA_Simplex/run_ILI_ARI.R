@@ -11,7 +11,8 @@ run_ILI_ARI = function(E_vec,
                        dates_to_forecast_from,
                        country_list,
                        save_files,
-                       target){
+                       target,
+                       plot_results){
   
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   ### ILIs & ARIs: Define parameters and perform simplex forecast ########
@@ -108,10 +109,10 @@ run_ILI_ARI = function(E_vec,
            origin_date = current_date+2, # change the definition of the origin date to agree with the date of submission
            target_end_date = target_end_date,
            value = prediction) %>% 
-  dplyr::select(origin_date, target, target_end_date, horizon, location, output_type, output_type_id, value) %>%
+    dplyr::select(origin_date, target, target_end_date, horizon, location, output_type, output_type_id, value) %>%
     filter(horizon %in% c(1,2,3,4))  %>% # take only horizons up to 4 weeks ahead
     arrange(location,horizon)
-    
+  
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   ### ILIs & ARIs: Save csv ########
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -137,40 +138,42 @@ run_ILI_ARI = function(E_vec,
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   ### ILIs & ARIs: Plot results and save the figure ########
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  # Load the file of the correct target
-  target_short = NA
-  if (target == "ILI incidence"){
-    x=read_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/Syndromic_indicators/ILI/", date_submission ,"-ECDC-soca_simplex.csv")),col_types = cols(.default = "c"))
-    target_short = "ILI"
-  } else if (target == "ARI incidence"){
-    x=read_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/Syndromic_indicators/ARI/", date_submission ,"-ECDC-soca_simplex.csv")),col_types = cols(.default = "c"))
-    target_short = "ARI"
-  } else {
-    stop("Wrong target!")
+  if (plot_results == T){
+    # Load the file of the correct target
+    target_short = NA
+    if (target == "ILI incidence"){
+      x=read_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/Syndromic_indicators/ILI/", date_submission ,"-ECDC-soca_simplex.csv")),col_types = cols(.default = "c"))
+      target_short = "ILI"
+    } else if (target == "ARI incidence"){
+      x=read_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/Syndromic_indicators/ARI/", date_submission ,"-ECDC-soca_simplex.csv")),col_types = cols(.default = "c"))
+      target_short = "ARI"
+    } else {
+      stop("Wrong target!")
+    }
+    # Make sure 'value' is double
+    x$value = as.double(x$value)
+    
+    # Prepare the dataframe to be used in the 'plot_step_ahead_model_output' function below
+    plot_mod_log = x %>% 
+      mutate(model_id="log",
+             output_type_id = as.numeric(output_type_id)) %>% 
+      rename(target_date=target_end_date) %>% 
+     filter(output_type != "median")
+    
+    df_data = df_train %>% mutate(observation = value)
+    
+    # Plot the figure
+    fig = plot_step_ahead_model_output(plot_mod_log, # Forecasts
+                                       df_data %>% mutate(time_idx=date) %>% filter(date>ymd("2024-01-01")), # Reported data
+                                       facet=c("location"), facet_scales = "free",
+                                       #intervals = c(0.95),
+                                       interactive=F)
+    
+    print(fig)
+    # Save the figure
+    filename = file.path(here(), paste0("Forecasting-hubs_models/model_output/figures/", date_submission ,"-ECDC-soca_simplex_", target_short ,".jpg"))
+    ggsave(filename, width = 40, height = 20, units = "cm")
   }
-  # Make sure 'value' is double
-  x$value = as.double(x$value)
-  
-  # Prepare the dataframe to be used in the 'plot_step_ahead_model_output' function below
-  plot_mod_log = x %>% 
-    mutate(model_id="log",
-           output_type_id = as.numeric(output_type_id)) %>% 
-    rename(target_date=target_end_date) %>% 
-    filter(output_type != "median")
-  
-  df_data = df_train %>% mutate(observation = value)
-  
-  # Plot the figure
-  fig = plot_step_ahead_model_output(plot_mod_log, # Forecasts
-                                     df_data %>% mutate(time_idx=date) %>% filter(date>ymd("2024-01-01")), # Reported data
-                                     facet=c("location"), facet_scales = "free",
-                                     #intervals = c(0.95),
-                                     interactive=F)
-  
-  print(fig)
-  # Save the figure
-  filename = file.path(here(), paste0("Forecasting-hubs_models/model_output/figures/", date_submission ,"-ECDC-soca_simplex_", target_short ,".jpg"))
-  ggsave(filename, width = 40, height = 20, units = "cm")
   
   return(0)
 }

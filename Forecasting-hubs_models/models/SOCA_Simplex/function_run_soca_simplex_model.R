@@ -145,7 +145,8 @@ run_soca_simplex_model = function(current_date,
                     dates_to_forecast_from,
                     country_list,
                     save_files,
-                    target)
+                    target,
+                    plot_results)
       },
       error = function(cond) {
         message(paste0("Soca simplex was not able to run for ", target))
@@ -308,7 +309,8 @@ run_soca_simplex_model = function(current_date,
                           dates_to_forecast_from,
                           country_list,
                           save_files,
-                          target)
+                          target,
+                          plot_results)
         finished_one_target_ok = TRUE
       },
       error = function(cond) {

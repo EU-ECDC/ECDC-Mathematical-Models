@@ -11,7 +11,8 @@ run_COVID_targets = function(E_vec,
                              dates_to_forecast_from,
                              country_list,
                              save_files,
-                             target){
+                             target,
+                             plot_results){
   
   
   df_out = simplex_compute(df_train, dates_to_forecast_from, E_vec, country_list, transform_vec, target)
@@ -128,33 +129,34 @@ run_COVID_targets = function(E_vec,
   ### COVID-19: Plot results and save the figure ########
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   # Additonally: Plot results and save the figure
-  
-  # Load the file of one target
-  x=read_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/COVID/", date_submission ,"-ECDC-soca_simplex_",target ,".csv")),col_types = cols(.default = "c"))
-  # Make sure 'value' is double
-  x$value = as.double(x$value)
-  
-  # Prepare the dataframe to be used in the 'plot_step_ahead_model_output' function below
-  plot_mod_log = x %>% 
-    mutate(model_id="log") %>% 
-    rename(target_date=target_end_date,
-           #output_type_id = quantile,
-           #output_type = type
-           ) %>% 
-    filter(output_type != "median")
-  
-  # Plot the figure
-  df_train = df_train %>% mutate(observation = value)
-  fig = plot_step_ahead_model_output(plot_mod_log, # Forecasts
-                                     df_train %>% mutate(time_idx=date) %>% filter(date>ymd("2024-01-01")), # Reported data
-                                     facet=c("location"), facet_scales = "free",
-                                     #intervals = c(0.95),
-                                     interactive=F)
-  
-  print(fig)
-  # Save the figure
-  filename = file.path(here(), paste0("Forecasting-hubs_models/model_output/figures/", date_submission ,"-ECDC-soca_simplex_",target ,".jpg"))
-  ggsave(filename, width = 40, height = 20, units = "cm")
+  if (plot_results == T){
+    # Load the file of one target
+    x=read_csv(file=file.path(here(), paste0("Forecasting-hubs_models/model_output/COVID/", date_submission ,"-ECDC-soca_simplex_",target ,".csv")),col_types = cols(.default = "c"))
+    # Make sure 'value' is double
+    x$value = as.double(x$value)
+    
+    # Prepare the dataframe to be used in the 'plot_step_ahead_model_output' function below
+    plot_mod_log = x %>% 
+      mutate(model_id="log") %>% 
+      rename(target_date=target_end_date,
+             #output_type_id = quantile,
+             #output_type = type
+      ) %>% 
+      filter(output_type != "median")
+    
+    # Plot the figure
+    df_train = df_train %>% mutate(observation = value)
+    fig = plot_step_ahead_model_output(plot_mod_log, # Forecasts
+                                       df_train %>% mutate(time_idx=date) %>% filter(date>ymd("2024-01-01")), # Reported data
+                                       facet=c("location"), facet_scales = "free",
+                                       #intervals = c(0.95),
+                                       interactive=F)
+    
+    print(fig)
+    # Save the figure
+    filename = file.path(here(), paste0("Forecasting-hubs_models/model_output/figures/", date_submission ,"-ECDC-soca_simplex_",target ,".jpg"))
+    ggsave(filename, width = 40, height = 20, units = "cm")
+  }
   
   return(0)
 }

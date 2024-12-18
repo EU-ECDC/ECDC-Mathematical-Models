@@ -58,7 +58,7 @@ run_COVID_hosps = T
 run_COVID_deaths = F #deaths not part of RespiCast
 
 # Define if you want to plot and save results (forecasts) - used for 'eye checking' of the output
-plot_results = F
+plot_results = T
 
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

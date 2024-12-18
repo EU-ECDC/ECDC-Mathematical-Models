@@ -337,19 +337,19 @@ run_soca_simplex_model = function(current_date,
     # Check if we skip this target
     if (target == "case"){
       if (run_COVID_cases == F){
-        message(paste0("Skipping ", target))
+        #message(paste0("Skipping ", target))
         next
       }
     }
     if (target == "hosp"){
       if (run_COVID_hosps == F){
-        message(paste0("Skipping ", target))
+        #message(paste0("Skipping ", target))
         next
       }
     }
     if (target == "death"){
       if (run_COVID_deaths == F){
-        message(paste0("Skipping ", target))
+        #message(paste0("Skipping ", target))
         next
       }
     }

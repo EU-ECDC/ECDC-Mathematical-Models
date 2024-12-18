@@ -43,13 +43,13 @@ plot_data_with_quantiles <- function(data, forecast, quantile_range) {
     geom_line(data = data, aes(x = date, y = value, color = "Observed"), size = 1) +
     geom_point(data = data, aes(x = date, y = value, color = "Observed"), size = 2) +
     # Add the quantile envelope
-    geom_ribbon(data = forecast_envelope, aes(x = target_date, ymin = lower_mid, ymax = upper_mid, fill = 'red'), alpha = 0.5) +
-    geom_ribbon(data = forecast_envelope, aes(x = target_date, ymin = lower_out, ymax = upper_out, fill = "red"), alpha = 0.2) +
+    geom_ribbon(data = forecast_envelope, aes(x = target_date, ymin = lower_mid, ymax = upper_mid), fill = 'red', alpha = 0.5) +
+    geom_ribbon(data = forecast_envelope, aes(x = target_date, ymin = lower_out, ymax = upper_out), fill = "red", alpha = 0.2) +
     # Add the median line
     geom_point(data = forecast_median, aes(x = target_date, y = value, color = "Forecasts")) +
     geom_line(data = forecast_median, aes(x = target_date, y = value, color = "Forecasts"), size = 1) +
     # Facet by location with free scales
-    facet_wrap(~location, scales = "free") +
+    facet_wrap(~location, scales = "free_y") +
     # Custom colors and labels
     scale_color_manual(values = c("Observed" = "gray", "Forecasts" = "red")) +
     #scale_fill_manual(values = c(QR1 = "blue", QR2 = "red")) +

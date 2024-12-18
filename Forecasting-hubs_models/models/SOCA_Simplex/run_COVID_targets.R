@@ -135,22 +135,20 @@ run_COVID_targets = function(E_vec,
     # Make sure 'value' is double
     x$value = as.double(x$value)
     
-    # Prepare the dataframe to be used in the 'plot_step_ahead_model_output' function below
-    plot_mod_log = x %>% 
-      mutate(model_id="log") %>% 
-      rename(target_date=target_end_date,
-             #output_type_id = quantile,
-             #output_type = type
-      ) %>% 
-      filter(output_type != "median")
+    # Prepare for plot
+    forecast = x %>%
+      rename(target_date = target_end_date,
+             quantiles = output_type_id) %>%
+      mutate(target_date = ymd(target_date),
+             quantiles = as.double(quantiles)) %>%
+      select(location, target_date, quantiles, value)
+    data = df_train %>%
+      mutate(date=ymd(date)) %>%
+      select(location, date, value)
+      
     
     # Plot the figure
-    df_train = df_train %>% mutate(observation = value)
-    fig = plot_step_ahead_model_output(plot_mod_log, # Forecasts
-                                       df_train %>% mutate(time_idx=date) %>% filter(date>ymd("2024-01-01")), # Reported data
-                                       facet=c("location"), facet_scales = "free",
-                                       #intervals = c(0.95),
-                                       interactive=F)
+    fig = plot_data_with_quantiles(data, forecast, quantile_range)
     
     print(fig)
     # Save the figure

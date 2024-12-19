@@ -1,6 +1,14 @@
-# Creates a plot of forecasts. 
+# Creates a plot of forecasts (median + quantile envelope) with past data
+# Each location/country is a separate facet/subplot
+# Input:
+# - data: dataframe of past data with columns, date, location, value
+# - forecasts: dataframe of forecasts with columns, date, location, , quantiles, value
+# - quantile range: vector of size 2 that defines which inter quantile range you want to show; default is c(0.5, 0.9)
+# 
+# Output:
+# - output figure handle 
 
-plot_data_with_quantiles <- function(data, forecast, quantile_range) {
+plot_data_with_quantiles <- function(data, forecast, quantile_range = c(0.5, 0.9)) {
   # Validate inputs
   if (!all(c("date", "location", "value") %in% names(data))) {
     stop("The first data frame must contain columns: date, location, value.")
@@ -19,6 +27,7 @@ plot_data_with_quantiles <- function(data, forecast, quantile_range) {
   
   # Prepare forecast data for envelopes
   forecast_envelope <- forecast %>%
+    # Using the 'abs(value-bound)<1e-10' due to issues in the past with 'value==bound'
     filter( abs(quantiles-lower_mid_bound)<1e-10 | abs(quantiles-upper_mid_bound)<1e-10 |
             abs(quantiles-lower_out_bound)<1e-10 | abs(quantiles-upper_out_bound)<1e-10) %>%
     pivot_wider(names_from = quantiles, values_from = value, names_prefix = "quantile_") %>%
@@ -54,7 +63,7 @@ plot_data_with_quantiles <- function(data, forecast, quantile_range) {
     scale_color_manual(values = c("Observed" = "gray", "Forecasts" = "red")) +
     #scale_fill_manual(values = c(QR1 = "blue", QR2 = "red")) +
     # Labels and theme
-    labs(title = "Observed Data and Forecast with Quantile Envelope",
+    labs(title = "Observed Data and Forecasts with Quantile Envelope",
          x = "Date",
          y = "Value",
          color = "Legend",

@@ -166,7 +166,7 @@ run_ILI_ARI = function(E_vec,
     
     
     # Plot the figure
-    fig = plot_data_with_quantiles(data, forecast, quantile_range)
+    fig = plot_data_with_quantiles(data, forecast)
     
     print(fig)
     # Save the figure

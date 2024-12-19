@@ -1,0 +1,100 @@
+  name: Submit_RespiCast-COVID_Forecasts
+  # Firts step is to define di events that can trigger this workflow
+  on:
+    # Run upon previous GenerateModelOutput completion
+    workflow_run:
+      workflows: [Generate_RespiCast_Forecasts]
+      types:
+        - completed
+    # Or you can manually trigger the workflow
+    workflow_dispatch:
+
+  jobs:
+    create_PR_job:
+      permissions:
+        contents: write  # Allows pushing changes to the repository
+        pages: write
+      runs-on: ubuntu-latest
+        
+      steps:
+        # Step 1: Checkout the source repository (ECDC-Mathematical-Models)
+      - name: Checkout source repository
+        uses: actions/checkout@v3
+        with:
+          repository: 'EU-ECDC/ECDC-Mathematical-Models'
+          ref: 'main'
+          path: './source-repo'
+
+        # Step 2: Checkout the destination repository (RespiCast-Covid19)
+      - name: Checkout destination repository
+        uses: actions/checkout@v3
+        with:
+          repository: 'european-modelling-hubs/RespiCast-Covid19'
+          ref: 'main'
+          path: './destination-repo'
+
+        # Step 3: Calculate Wednesday's date of the current week
+      - name: Calculate Wednesday's date
+        id: calculate_wednesday
+        run: |
+          # Get the current day of the week (1=Monday, ..., 7=Sunday)
+          weekday=$(date +%u)
+          # Calculate how many days to add or subtract to get to Wednesday (3)
+          offset=$((3 - weekday))
+          # Calculate the date of the Wednesday (if offset is negative, subtract days)
+          wednesday_date=$(date -d "$offset days" +%Y-%m-%d)
+          echo "Wednesday's date is $wednesday_date"
+          # Set the output
+          echo "::set-output name=wednesday_date::$wednesday_date"
+
+        # Step 3a: Debug file existence
+      - name: Debug file existence
+        run: |
+          echo "Source directory files:"
+          ls ./source-repo/Forecasting-hubs_models/model_output/COVID/
+          echo "Destination directory:"
+          ls ./destination-repo/model-output/
+
+        # Step 4: Sync destination repo and create a new branch
+      - name: Create a new branch
+        run: |
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          cd ./destination-repo
+          git config --unset-all http.https://github.com/.extraheader
+          git checkout -b add-results-RespiCast-Covid19
+
+        # Step 5: Copy the two model-output files to the destination repository
+      - name: Copy model-output files
+        run: |
+          wednesday_date=${{ steps.calculate_wednesday.outputs.wednesday_date }}
+          cp ./source-repo/Forecasting-hubs_models/model_output/COVID/${wednesday_date}-ECDC-soca_simplex.csv \
+             ./destination-repo/model-output/ECDC-soca_simplex/
+          cp ./source-repo/Forecasting-hubs_models/model_output/COVID/${wednesday_date}-ECDC-SARIMA.csv \
+             ./destination-repo/model-output/ECDC-SARIMA/
+        shell: bash
+
+        # Step 6: Commit the files to the new branch
+      - name: Commit changes
+        run: |
+          cd ./destination-repo
+          git status  # Check what changes are detected
+          wednesday_date=${{ steps.calculate_wednesday.outputs.wednesday_date }}
+          git add ./model-output/ECDC-soca_simplex/${wednesday_date}-ECDC-soca_simplex.csv \
+                  ./model-output/ECDC-SARIMA/${wednesday_date}-ECDC-SARIMA.csv
+          git status  # Verify if the files were staged
+          git commit -m "Submitting forecasts of Covid19 indicators - soca_simplex and SARIMA models"
+          #git push https://x-access-token:${{ secrets.Secret_PUSH_ACCESS_RespiCast }}@github.com/european-modelling-hubs/RespiCast-Covid19.git main
+          git push https://x-access-token:${{ secrets.Secret_PUSH_ACCESS_RespiCast }}@github.com/european-modelling-hubs/RespiCast-Covid19.git add-results-RespiCast-Covid19
+          
+        # Step 7: Open a pull request
+      - name: Create a pull request
+        run: |
+          cd ./destination-repo
+          gh pr create --head add-results-RespiCast-Covid19 \
+                       --base main \
+                       --title "Submitting ECDC forecasts" \
+                       --body "This PR adds the ECDC forecasts to RespiCast repo."
+        env:
+          GH_TOKEN: ${{ secrets.Secret_PUSH_ACCESS_RespiCast }}
+          

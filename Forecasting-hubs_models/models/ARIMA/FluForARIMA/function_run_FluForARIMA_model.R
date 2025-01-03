@@ -17,7 +17,7 @@ run_FluForARIMA_model = function(current_date,
     stop("The input date is NOT a Monday. Please provide Monday of the submission week.")
   }
   
-  if (run_ARI){ 
+  if (run_ILI){ 
     message("#### Running FluForARIMA for ILI ####")
     # ---- 1. set up ----
     message('loading data')

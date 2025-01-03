@@ -48,11 +48,6 @@ final_output <- function(monday_date,run_COVID_cases,run_COVID_deaths, run_COVID
         # Make sure 'value' is double
         x$value = as.double(x$value)
         
-        # Prepare the dataframe to be used in the 'plot_step_ahead_model_output' function below
-        plot_mod_log = x %>% 
-          mutate(model_id="log",
-                 target_date=target_end_date)
-        
         # Reported data - prepare for plotting
         if (target0 == "case"){
           df_data = data_cases
@@ -63,12 +58,20 @@ final_output <- function(monday_date,run_COVID_cases,run_COVID_deaths, run_COVID
         } else {
           message("Plotting function: Wrong target name")
         }
+        
+        # Prepare for plot
+        forecast = x %>%
+          rename(target_date = target_end_date,
+                 quantiles = output_type_id) %>%
+          mutate(target_date = ymd(target_date),
+                 quantiles = as.double(quantiles)) %>%
+          select(location, target_date, quantiles, value)
+        data = df_data %>%
+          mutate(date=ymd(truth_date)) %>%
+          select(location, date, value)
+        
         # Plot the figure
-        fig = plot_step_ahead_model_output( as_tibble(plot_mod_log), # Forecasts
-                                            df_data %>% mutate(time_idx=truth_date ) %>% filter(time_idx > ymd("2024-01-01")), # Reported data
-                                            facet=c("location"), facet_scales = "free",
-                                            #intervals = c(0.95),
-                                            interactive=F)
+        fig = plot_data_with_quantiles(data, forecast)
         
         print(fig)
         # Save the figure

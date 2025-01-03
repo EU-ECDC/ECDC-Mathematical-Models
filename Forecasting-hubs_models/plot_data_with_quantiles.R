@@ -8,7 +8,9 @@
 # Output:
 # - output figure handle 
 
-plot_data_with_quantiles <- function(data, forecast, quantile_range = c(0.5, 0.9)) {
+plot_data_with_quantiles <- function(data, forecast, 
+                                     quantile_range = c(0.5, 0.9),
+                                     days_of_data_to_show = 90) {
   # Validate inputs
   if (!all(c("date", "location", "value") %in% names(data))) {
     stop("The first data frame must contain columns: date, location, value.")
@@ -43,7 +45,7 @@ plot_data_with_quantiles <- function(data, forecast, quantile_range = c(0.5, 0.9
   
   # Filtering before plotting
   countries_forecasts = unique( forecast$location )
-  data = data %>% filter(date>max(date)-90,
+  data = data %>% filter(date>max(date)-days_of_data_to_show,
                          location %in% countries_forecasts)
   
   # Create the plot

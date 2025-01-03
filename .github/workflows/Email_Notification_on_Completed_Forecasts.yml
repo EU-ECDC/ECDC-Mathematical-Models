@@ -2,7 +2,7 @@ name: Send_Automated_Email
 
 on:
   workflow_run:
-    workflows: ["Generate_RespiCast_Forecasts"]  # Trigger when this workflow finishes
+    #workflows: ["Generate_RespiCast_Forecasts"]  # Trigger when this workflow finishes
     types:
       - completed
   

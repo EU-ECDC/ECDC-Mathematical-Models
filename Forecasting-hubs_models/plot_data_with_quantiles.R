@@ -37,8 +37,13 @@ plot_data_with_quantiles <- function(data, forecast,
            upper_mid = paste0("quantile_", upper_mid_bound),
            lower_out = paste0("quantile_", lower_out_bound),
            upper_out = paste0("quantile_", upper_out_bound),
-           )
-  
+           ) %>% 
+    group_by(location, target_date) %>%
+    summarise(lower_mid = min(lower_mid,na.rm = T),
+              upper_mid = max(upper_mid,na.rm = T),
+              lower_out = min(lower_out,na.rm = T),
+              upper_out = max(upper_out,na.rm = T),
+              .groups='drop')
   # Extract median values from forecast
   forecast_median <- forecast %>%
     filter(quantiles == 0.5)
@@ -47,7 +52,7 @@ plot_data_with_quantiles <- function(data, forecast,
   countries_forecasts = unique( forecast$location )
   data = data %>% filter(date>max(date)-days_of_data_to_show,
                          location %in% countries_forecasts)
-  
+
   # Create the plot
   plot <- ggplot() +
     # Add the line plot for the first data frame

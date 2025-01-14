@@ -11,8 +11,8 @@ on:
 
   # You can trigger the workflow at a scheduled time 
   schedule:
-    # runnit it every Tue at 6.00 pm
-    - cron: "00 18 * * 2"
+    # runnit it every Tue at noon
+    - cron: "00 12 * * 2"
 
   
   # Or you can manually trigger the workflow

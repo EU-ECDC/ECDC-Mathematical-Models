@@ -11,7 +11,7 @@ on:
 
   # You can trigger the workflow at a scheduled time 
   schedule:
-    # runnit it every Tue at noon
+    # run it it at pre-defined time
     - cron: "00 17 * * 1"
 
   

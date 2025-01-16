@@ -37,8 +37,9 @@ jobs:
       - name: checkout forked repository
         uses: actions/checkout@v3
         with:
-	  ref: "main"
-          token: ${{ secrets.Secret_PUSH_ACCESS_RespiCast}} #this might raise a problem 
+	  ref: 'main'
+   	  token: ${{ secrets.Secret_PUSH_ACCESS_RespiCast}} 
+          #this might raise a problem 
 	  repository: 'ECDC-modelling-team/RespiCast-SyndromicIndicators'
 
       # Step 2: Checkout the model data repository - main branch -

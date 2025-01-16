@@ -41,7 +41,7 @@ jobs:
           token: ${{secrets.Secret_PUSH_ACCESS_RespiCast}} 
           #this might raise a problem 
           repository: 'ECDC-modelling-team/RespiCast-SyndromicIndicators'
-          path: './destination_repo/'
+          path: './destination-repo/'
 
       # Step 2: Checkout the model data repository - main branch -
       # This is the repository where the model output data reside

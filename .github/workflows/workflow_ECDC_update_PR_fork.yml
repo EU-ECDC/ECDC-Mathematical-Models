@@ -59,7 +59,7 @@ jobs:
 
       # Step 3?: Set the default remote repository to use when querying the GitHub API for the locally cloned repository.
       - run: |
-          cd ./destination_repo/
+          cd ./destination-repo/
           gh repo set-default european-modelling-hubs/RespiCast-SyndromicIndicators
         env:
             GITHUB_TOKEN: ${{ secrets.Secret_PUSH_ACCESS_RespiCast}} #this is probably the correct one (but will need to save the secrets locally)
@@ -68,7 +68,7 @@ jobs:
       # Step 4: Pull directly from main branch of the upstream repository,
       # so you do not have to sync and the workflow is not part of the PR
       - run: |
-          cd ./destination_repo/
+          cd ./destination-repo/
           git config --global user.name "ECDC-modelling-team" #update
           git config --global user.email "195103994+ECDC-modelling-team@users.noreply.github.com" #update
           git remote add upstream https://github.com/european-modelling-hubs/RespiCast-SyndromicIndicators.git

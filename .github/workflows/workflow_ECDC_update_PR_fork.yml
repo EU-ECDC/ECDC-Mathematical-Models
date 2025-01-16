@@ -18,7 +18,7 @@ on:
   
   # Run on schedule
   schedule:
-  - cron: "00 08 * * 2" #tuesday 8AM
+  	- cron: "00 08 * * 2" #tuesday 8AM
   # TODO: look up how to trigger when other workflow (in other repository) is completed
   # Or you can manually trigger the workflow
   workflow_dispatch:

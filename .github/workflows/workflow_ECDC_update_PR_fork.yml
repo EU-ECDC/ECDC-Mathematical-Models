@@ -95,6 +95,7 @@ jobs:
       # Step 6: make a copy of the needed files from data repository
       - name: Copy model-output file
         run: |
+          cd ./destination-repo/
           wednesday_date=${{ steps.calculate_wednesday.outputs.wednesday_date }}
           cp ./source-repo/Forecasting-hubs_models/model_output/Syndromic_indicators/${wednesday_date}-ECDC-soca_simplex.csv \
              ./destination-repo/model-output/ECDC-soca_simplex/

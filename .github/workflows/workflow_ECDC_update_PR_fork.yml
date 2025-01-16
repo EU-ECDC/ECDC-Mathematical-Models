@@ -72,7 +72,6 @@ jobs:
           git checkout -b pr-new-branch upstream/main
         env:
             GITHUB_TOKEN: ${{ secrets.Secret_PUSH_ACCESS_RespiCast }} #same as for step3
-	
 
       # Step 5: Calculate Wednesday's date of the current week
       - name: Calculate Wednesday's date
@@ -92,12 +91,12 @@ jobs:
       # Step 6: make a copy of the needed files from data repository
       - name: Copy model-output file
         run: |
-      	  wednesday_date=${{ steps.calculate_wednesday.outputs.wednesday_date }}
+          wednesday_date=${{ steps.calculate_wednesday.outputs.wednesday_date }}
           cp ./source-repo/Forecasting-hubs_models/model_output/Syndromic_indicators/${wednesday_date}-ECDC-soca_simplex.csv \
              ./destination-repo/model-output/ECDC-soca_simplex/
           cp ./source-repo/Forecasting-hubs_models/model_output/Syndromic_indicators/${wednesday_date}-ECDC-SARIMA.csv \
              ./destination-repo/model-output/ECDC-SARIMA/
-      	  #cp ./data-repo/archive/yyyy-mm-dd-TeamName-ModelName.csv ./model-output/ECDC
+          #cp ./data-repo/archive/yyyy-mm-dd-TeamName-ModelName.csv ./model-output/ECDC
 
       # Step 7?: commit changes to the new brach! This step is needed in order
       # to succesfully open the subsequent pull request

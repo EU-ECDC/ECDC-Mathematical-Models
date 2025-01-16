@@ -73,6 +73,7 @@
              ./destination-repo/model-output/ECDC-soca_simplex/
           cp ./source-repo/Forecasting-hubs_models/model_output/Syndromic_indicators/${wednesday_date}-ECDC-SARIMA.csv \
              ./destination-repo/model-output/ECDC-SARIMA/
+          # If you want to add more model submission, add them here in the same way as line above
         shell: bash
 
         # Step 6: Commit the files to the new branch
@@ -98,4 +99,4 @@
                        --body "This PR adds the ECDC forecasts to RespiCast repo."
         env:
           GH_TOKEN: ${{ secrets.Secret_PUSH_ACCESS_RespiCast }}
-          
+        # If the merge of this branch fail, the branch will remain on the RespiCast repo and we will have to delete it by hand

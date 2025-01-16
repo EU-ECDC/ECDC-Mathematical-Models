@@ -61,6 +61,7 @@
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
           cd ./destination-repo
+          # The line below must be there for the workflow to work - magic?
           git config --unset-all http.https://github.com/.extraheader
           git checkout -b add-results-RespiCast-SyndromicIndicators
 

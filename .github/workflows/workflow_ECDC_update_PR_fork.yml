@@ -118,6 +118,8 @@ jobs:
       # containing a valid PERSONAL ACCESS TOKEN for YourGitHubUserName.
       # Without this secret the pr create fails with "Resource not accessible by integration" error
       - name: Open the pull requests
-        run: gh pr create --head  YourGitHubUserName:pr-new-branch  --base main --title 'PR Title' --body 'PR Body'
+        run: | 
+          cd ./destination-repo/
+          gh pr create --head  ECDC-modelling-team:pr-new-branch  --base main --title 'PR Title' --body 'PR Body'
         env:
           GH_TOKEN: ${{ secrets.MY_PAT_SECRET  }} #Probably largely the same token (?) - one for respicast, one for modelling repo. 

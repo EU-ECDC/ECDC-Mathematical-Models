@@ -58,7 +58,9 @@ jobs:
 
 
       # Step 3?: Set the default remote repository to use when querying the GitHub API for the locally cloned repository.
-      - run: gh repo set-default european-modelling-hubs/RespiCast-SyndromicIndicators
+      - run: |
+          cd ./destination_repo/
+          gh repo set-default european-modelling-hubs/RespiCast-SyndromicIndicators
         env:
             GITHUB_TOKEN: ${{ secrets.Secret_PUSH_ACCESS_RespiCast}} #this is probably the correct one (but will need to save the secrets locally)
 

@@ -68,6 +68,7 @@ jobs:
       # Step 4: Pull directly from main branch of the upstream repository,
       # so you do not have to sync and the workflow is not part of the PR
       - run: |
+          cd ./destination_repo/
           git config --global user.name "ECDC-modelling-team" #update
           git config --global user.email "195103994+ECDC-modelling-team@users.noreply.github.com" #update
           git remote add upstream https://github.com/european-modelling-hubs/RespiCast-SyndromicIndicators.git

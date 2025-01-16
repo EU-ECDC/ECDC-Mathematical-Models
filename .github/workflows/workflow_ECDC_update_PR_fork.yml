@@ -41,6 +41,7 @@ jobs:
           token: ${{secrets.Secret_PUSH_ACCESS_RespiCast}} 
           #this might raise a problem 
           repository: 'ECDC-modelling-team/RespiCast-SyndromicIndicators'
+          path: './destination_repo/'
 
       # Step 2: Checkout the model data repository - main branch -
       # This is the repository where the model output data reside
@@ -65,8 +66,8 @@ jobs:
       # Step 4: Pull directly from main branch of the upstream repository,
       # so you do not have to sync and the workflow is not part of the PR
       - run: |
-          git config --global user.name "YourGitHubUserName" #update
-          git config --global user.email "your_email@ewhatever.com" #update
+          git config --global user.name "ECDC-modelling-team" #update
+          git config --global user.email "195103994+ECDC-modelling-team@users.noreply.github.com" #update
           git remote add upstream https://github.com/european-modelling-hubs/RespiCast-SyndromicIndicators.git
           git fetch --all
           git checkout -b pr-new-branch upstream/main

@@ -1,4 +1,4 @@
-name: ECDC-update-PR-fork
+name: ECDC_update_PR_fork
 
 # This example workflow is meant to depict steps needed to get the model-output data
 # from your_organization data GitHub repository and open a pull request to upload data

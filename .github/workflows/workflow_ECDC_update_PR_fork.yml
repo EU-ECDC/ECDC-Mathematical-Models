@@ -15,13 +15,10 @@ name: ECDC_update_PR_fork
 
 # Firts step is to define di events that can trigger this workflow
 on:
-  
-  # Run on schedule
-  schedule:
-      - cron: "00 08 * * 2" 
-      #tuesday 8AM
-      
-  # TODO: look up how to trigger when other workflow (in other repository) is completed
+  workflow_run:
+    workflows: [Generate_RespiCast_Forecasts]
+    types:
+      - completed
   # Or you can manually trigger the workflow
   workflow_dispatch:
 

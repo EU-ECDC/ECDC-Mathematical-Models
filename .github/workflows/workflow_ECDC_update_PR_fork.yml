@@ -101,14 +101,16 @@ jobs:
 
       # Step 7?: commit changes to the new brach! This step is needed in order
       # to succesfully open the subsequent pull request
-      - run: |
+      - name: commit to new branch
+        run: |
           cd ./destination-repo/
           wednesday_date=${{ steps.calculate_wednesday.outputs.wednesday_date }}
           git add ./model-output/ECDC-soca_simplex/${wednesday_date}-ECDC-soca_simplex.csv
           git add ./model-output/ECDC-SARIMA/${wednesday_date}-ECDC-SARIMA.csv
           git commit -m "AutoSubmitPR"
           git push -u origin pr-new-branch
-
+        env:
+          GH_TOKEN: ${{ secrets.MODELLING_ACCOUNT_SECRET  }} #Probably largely the same token (?) - one for respicast, one for modelling repo. 
 
       # Step 8: Finally, open the pull request from local pr-new-branch to the main branch
       # secrets.MY_PAT_SECRET is a repository secret you have to create in your forked repository

@@ -85,7 +85,7 @@
           git status  # Verify if the files were staged
           git commit -m "Submitting forecasts of Covid19 indicators - soca_simplex and SARIMA models"
           #git push https://x-access-token:${{ secrets.Secret_PUSH_ACCESS_RespiCast }}@github.com/european-modelling-hubs/RespiCast-Covid19.git main
-          git push https://x-access-token:${{ secrets.Secret_PUSH_ACCESS_RespiCast }}@github.com/european-modelling-hubs/RespiCast-Covid19.git add-results-RespiCast-Covid19
+          git push https://x-access-token:${{ secrets.REPOACCESS_EUROPEANMODELLINGHUBS }}@github.com/european-modelling-hubs/RespiCast-Covid19.git add-results-RespiCast-Covid19
           
         # Step 7: Open a pull request
       - name: Create a pull request
@@ -96,5 +96,5 @@
                        --title "Submitting ECDC forecasts" \
                        --body "This PR adds the ECDC forecasts to RespiCast repo."
         env:
-          GH_TOKEN: ${{ secrets.Secret_PUSH_ACCESS_RespiCast }}
+          GH_TOKEN: ${{ secrets.REPOACCESS_EUROPEANMODELLINGHUBS }}
           

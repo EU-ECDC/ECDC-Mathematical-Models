@@ -14,7 +14,7 @@ required_libraries = c("arrow", "bayesplot", "caTools", "crayon", "dagitty", "da
                        "Hmisc", "hubVis", "ISOweek", "KeyboardSimulator", "limSolve", 
                        "lubridate", "magrittr", "MASS", "mgcv", "nlme", "odbc", "pacman", 
                        "patchwork", "pracma", "purrr", "readr", "readxl", "scales", 
-                       "scoringutils", "sparsevar", "stringr", "summarytools", "survival", 
+                       "scoringutils", "stringr", "summarytools", "survival", 
                        "tibble", "tictoc", "tidybayes", "tidyr", "tidyverse", "usethis", 
                        "viridis", "viridisLite", "wrapr", "zoo")
 installed_packages = rownames(installed.packages())

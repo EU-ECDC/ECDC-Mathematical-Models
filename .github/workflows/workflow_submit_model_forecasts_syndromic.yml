@@ -86,8 +86,7 @@
                   ./model-output/ECDC-SARIMA/${wednesday_date}-ECDC-SARIMA.csv
           git status  # Verify if the files were staged
           git commit -m "Submitting forecasts of Syndromic_indicators - soca_simplex and SARIMA models"
-          #git push https://x-access-token:${{ secrets.Secret_PUSH_ACCESS_RespiCast }}@github.com/european-modelling-hubs/RespiCast-SyndromicIndicators.git main
-          git push https://x-access-token:${{ secrets.Secret_PUSH_ACCESS_RespiCast }}@github.com/european-modelling-hubs/RespiCast-SyndromicIndicators.git add-results-RespiCast-SyndromicIndicators
+          git push https://x-access-token:${{ secrets.REPOACCESS_EUROPEANMODELLINGHUBS }}@github.com/european-modelling-hubs/RespiCast-SyndromicIndicators.git add-results-RespiCast-SyndromicIndicators
           
         # Step 7: Open a pull request
       - name: Create a pull request
@@ -98,5 +97,5 @@
                        --title "Submitting ECDC forecasts" \
                        --body "This PR adds the ECDC forecasts to RespiCast repo."
         env:
-          GH_TOKEN: ${{ secrets.Secret_PUSH_ACCESS_RespiCast }}
+          GH_TOKEN: ${{ secrets.REPOACCESS_EUROPEANMODELLINGHUBS }}
         # If the merge of this branch fail, the branch will remain on the RespiCast repo and we will have to delete it by hand

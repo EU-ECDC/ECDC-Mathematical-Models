@@ -13,7 +13,7 @@
 start_time <- Sys.time()
 library(devtools) # since this is needed to source this script remotely, needs to check masking behaviour
 library( caTools ) #for the function runmean
-library( limSolve ) #for solving constrained linear least squares
+#library( limSolve ) #for solving constrained linear least squares
 #library( sparsevar ) #for computing the spectral radius
 library( glmc )
 library( mgcv) # for splines

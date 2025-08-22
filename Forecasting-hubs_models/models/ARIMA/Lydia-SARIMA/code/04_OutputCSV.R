@@ -1,22 +1,18 @@
-create_output <- function(indicator, monday_date){
-  
-  if (length(indicator) == length(cases)) {
+create_output <- function(indicator, monday_date, ind){
+  if (ind == "case") {
     if (all.equal(indicator, cases)) {
       N_countries <- length(unique(data_cases$location_name))
       countries <- unique(data_cases$location)
-      ind <- "case"
     }
-  } else if (length(indicator) == length(deaths)) {
+  } else if (ind == "death") {
     if(all.equal(indicator, deaths)) {
       N_countries <- length(unique(data_deaths$location_name))
       countries <- unique(data_deaths$location)
-      ind <- "death"
     }
-  } else if (length(indicator) == length(hosps)) {
+  } else if (ind == "hosp") {
     if(all.equal(indicator, hosps)) {
       N_countries <- length(unique(data_hosps$location))
       countries <- sort(unique(data_hosps$location))
-      ind <- "hosp"
     }
   }
   

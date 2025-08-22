@@ -8,17 +8,17 @@ final_output <- function(monday_date,run_COVID_cases,run_COVID_deaths, run_COVID
   source("Forecasting-hubs_models/models/ARIMA/Lydia-SARIMA/code/04_OutputCSV.R")
   Lydia_SARIMA <- data.frame()
   if (run_COVID_cases){
-    Lydia_SARIMA <- rbind(Lydia_SARIMA, create_output(cases, monday_date))
+    Lydia_SARIMA <- rbind(Lydia_SARIMA, create_output(cases, monday_date, 'case'))
   }
   
   if (run_COVID_deaths){
-    Lydia_SARIMA <- rbind(Lydia_SARIMA, create_output(deaths, monday_date))
+    Lydia_SARIMA <- rbind(Lydia_SARIMA, create_output(deaths, monday_date, 'death'))
     
     
   }
   
   if (run_COVID_hosps){
-    Lydia_SARIMA <- rbind(Lydia_SARIMA, create_output(hosps, monday_date))
+    Lydia_SARIMA <- rbind(Lydia_SARIMA, create_output(hosps, monday_date, 'hosp'))
   }
   
   #update dataframe for new submission format (RespiCast Covid-19 hub)
@@ -34,7 +34,7 @@ final_output <- function(monday_date,run_COVID_cases,run_COVID_deaths, run_COVID
     select(origin_date, target,target_end_date,horizon,location,output_type,output_type_id,value)
   
   
-  write.csv(Lydia_SARIMA, paste0("Forecasting-hubs_models/model_output/COVID/", monday_date+2,"-ECDC-SARIMA.csv"), row.names=FALSE)
+  write.csv(Lydia_SARIMA, paste0("Forecasting-hubs_models/model_output/COVID/", monday_date+2,"-ECDC-SARIMA2.csv"), row.names=FALSE)
   
   # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   ### Plot results and save the figure ########

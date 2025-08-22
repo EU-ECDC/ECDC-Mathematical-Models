@@ -70,8 +70,8 @@
           wednesday_date=${{ steps.calculate_wednesday.outputs.wednesday_date }}
           cp ./source-repo/Forecasting-hubs_models/model_output/COVID/${wednesday_date}-ECDC-soca_simplex.csv \
              ./destination-repo/model-output/ECDC-soca_simplex/
-          cp ./source-repo/Forecasting-hubs_models/model_output/COVID/${wednesday_date}-ECDC-SARIMA.csv \
-             ./destination-repo/model-output/ECDC-SARIMA/
+          cp ./source-repo/Forecasting-hubs_models/model_output/COVID/${wednesday_date}-ECDC-SARIMA2.csv \
+             ./destination-repo/model-output/ECDC-SARIMA2/
         shell: bash
 
         # Step 6: Commit the files to the new branch
@@ -81,7 +81,7 @@
           git status  # Check what changes are detected
           wednesday_date=${{ steps.calculate_wednesday.outputs.wednesday_date }}
           git add ./model-output/ECDC-soca_simplex/${wednesday_date}-ECDC-soca_simplex.csv \
-                  ./model-output/ECDC-SARIMA/${wednesday_date}-ECDC-SARIMA.csv
+                  ./model-output/ECDC-SARIMA2/${wednesday_date}-ECDC-SARIMA2.csv
           git status  # Verify if the files were staged
           git commit -m "Submitting forecasts of Covid19 indicators - soca_simplex and SARIMA models"
           git push https://x-access-token:${{ secrets.REPOACCESS_EUROPEANMODELLINGHUBS }}@github.com/european-modelling-hubs/RespiCast-Covid19.git add-results-RespiCast-Covid19

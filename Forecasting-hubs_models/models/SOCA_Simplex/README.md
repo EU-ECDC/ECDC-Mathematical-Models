@@ -20,6 +20,8 @@ The SOCA Simplex method follows these steps:
 ## Requirements
 - Standard ECDC modelling team packages found on their repository (https://github.com/european-modelling-hubs/modelling_setup/tree/main)
 - 'Scoringutils' and 'hubVis' packages
+    - scoringutils: use `devtools::install_github('epiforecasts/scoringutils@v1.2.2')` to install the right version, later versions have breaking changes
+    - hubvis: `install.packages("hubVis", repos = c("https://hubverse-org.r-universe.dev", "https://cloud.r-project.org"))`
 
 ## Usage
 Within the `00_main.R` script, define the variable `current_date` which date of when forecasts are performed. Then run the `00_main.R` script. Of note:

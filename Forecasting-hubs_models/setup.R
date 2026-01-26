@@ -15,7 +15,7 @@ library(devtools) # since this is needed to source this script remotely, needs t
 library( caTools ) #for the function runmean
 #library( limSolve ) #for solving constrained linear least squares
 #library( sparsevar ) #for computing the spectral radius
-library( glmc )
+#library( glmc )
 library( mgcv) # for splines
 library( forecast ) # forecast
 library(gamlss)

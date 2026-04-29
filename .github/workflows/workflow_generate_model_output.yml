@@ -65,7 +65,6 @@ jobs:
         devtools::install_github('epiforecasts/scoringutils@v1.2.2')
         #install.packages("scoringutils")
         install.packages("summarytools",dependencies=TRUE)
-        install.packages("dagitty", dependencies = TRUE)
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       shell: Rscript {0}

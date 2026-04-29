@@ -7,7 +7,7 @@ message("################# --- Running the R script to run the ECDC RespiCast mo
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 # Install missing libraries
-required_libraries = c("arrow", "bayesplot", "caTools", "crayon", "data.table", 
+required_libraries = c("arrow", "bayesplot", "caTools", "crayon", "dagitty", "data.table", 
                        "DBI", "devtools", "dplyr", "dtplyr", "EnvStats", 
                        "fitdistrplus", "forcats", "forecast", "fst", "gamlss", "gamlss.data", 
                        "gamlss.dist", "ggplot2", "ggpubr", "ggrepel", "glmc", "here", 

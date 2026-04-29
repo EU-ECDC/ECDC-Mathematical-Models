@@ -52,7 +52,7 @@ jobs:
         use-public-rspm: true
 
     - name: Install system dependencies
-      run: sudo apt-get update && sudo apt-get install -y libmagick++-dev && sudo apt-get install -y libcurl4-openssl-dev
+      run: sudo apt-get update && sudo apt-get install -y libmagick++-dev && sudo apt-get install -y libcurl4-openssl-dev && sudo apt-get install -y nodejs libnode-dev
       
     - name: Installing R dependencies
       run: |

@@ -24,7 +24,7 @@ message(missing_packages)
 
 if (length(missing_packages)>0){
   message("################# --- Installing missing packages... --- ###################" )
-  install.packages(missing_packages, dependencies = TRUE)
+  install.packages(missing_packages, dependencies = TRUE, repos = "https://cloud.r-project.org")
 }
 
 message("################# --- Loading packages... --- ###################" )
